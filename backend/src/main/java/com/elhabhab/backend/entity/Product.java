@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -51,5 +53,10 @@ public class Product {
     private TaxClass taxClass; // ENUM: NONE, TVA_7, TVA_10, TVA_20 etc.
 
     private LocalDateTime createdTime;
+
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductPhoto> photos = new ArrayList<>();
+
 }
 

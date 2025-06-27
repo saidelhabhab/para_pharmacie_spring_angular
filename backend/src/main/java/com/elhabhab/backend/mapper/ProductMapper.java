@@ -15,14 +15,19 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductMapper {
 
-    @Mapping(target = "imagePath", ignore = true) // We'll set this manually in the service
+    @Mapping(target = "imagePath", ignore = true) // We'll set this manually
+    @Mapping(target = "photos", ignore = true)     // We'll set photos manually
     Product toEntity(ProductRequestDTO dto);
 
-    @Mapping(source = "imagePath", target = "imageUrl") // Map imagePath to imageUrl in DTO
+    @Mapping(source = "imagePath", target = "imageUrl")
+    @Mapping(target = "photoUrls", expression = "java(entity.getPhotos() != null ? entity.getPhotos().stream().map(p -> p.getImagePath()).toList() : new java.util.ArrayList<>())")
     ProductResponseDTO toDto(Product entity);
 
-    @Mapping(target = "imagePath", ignore = true) // We'll handle this manually in the service
+    @Mapping(target = "imagePath", ignore = true)
+    @Mapping(target = "photos", ignore = true)
     void updateProductFromDto(ProductRequestDTO dto, @MappingTarget Product entity);
 
     List<ProductResponseDTO> toDtoList(List<Product> entities);
 }
+
+

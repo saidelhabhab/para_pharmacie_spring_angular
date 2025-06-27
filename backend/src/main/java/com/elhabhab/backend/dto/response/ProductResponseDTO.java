@@ -8,6 +8,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -36,4 +37,8 @@ public class ProductResponseDTO {
 
 
     private LocalDateTime createdTime;
+
+
+    private List<String> photoUrls;
+
 }

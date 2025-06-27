@@ -1,24 +1,25 @@
 package com.elhabhab.backend.service.user.notification;
 
 
-
-import com.elhabhab.backend.dto.request.NotificationDto;
+import com.elhabhab.backend.dto.request.NotificationRequestDTO;
+import com.elhabhab.backend.dto.response.NotificationResponseDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserNotificationService {
 
-    public List<NotificationDto> getNotifications(Long userId);
+    List<NotificationResponseDTO> getNotifications(Long userId);
 
-    public void createNotification(String message);
+    void createNotification(NotificationRequestDTO requestDTO);
 
-    public void createNotificationPaying(Long userId,String message);
+    void createNotificationPaying(Long userId, String message);
 
-    public long countUserNotifications(Long userId, boolean read);
+    long countUserNotifications(Long userId, boolean read);
 
-    public void markAsRead(UUID notificationId);
+    void markAsRead(UUID notificationId);
 
-    public NotificationDto getNotificationBySecondId(UUID id);
-    public boolean deleteNotification(Long id);
+    NotificationResponseDTO getNotificationBySecondId(UUID id);
+
+    boolean deleteNotification(Long id);
 }
