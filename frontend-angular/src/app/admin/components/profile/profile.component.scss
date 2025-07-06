@@ -1,0 +1,1150 @@
+.custom-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  margin-bottom: 10px;
+  border: 0.5px solid #a0a1a180; // Light gray outline
+
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.breadcrumb-nav {
+  margin-left: auto;
+}
+
+.breadcrumb-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.breadcrumb-badge {
+  background-color: #e0f0ff;
+  color: #007bff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+//////////////////////////////
+/// 
+.card {
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.8s ease;
+
+  .card-body {
+    padding: 0;
+    background-color: #fff;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      max-height: 200px;
+      animation: zoomIn 1s ease;
+    }
+
+    .row {
+      padding: 1.5rem;
+    }
+
+    .text-center {
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      h4 {
+        font-weight: 700;
+        color: #9aa0a8;
+      }
+
+      p {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      i {
+        color: #0d6efd;
+        font-size: 1.5rem;
+      }
+    }
+
+    .round-110 {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      animation: bounceIn 1s ease;
+    }
+
+    .round-100 {
+      width: 100px;
+      height: 100px;
+    }
+
+    .list-unstyled {
+      li {
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+
+        a, button {
+          transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+      }
+    }
+
+    .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+
+      &:hover {
+        background-color: #0b5ed7;
+      }
+    }
+
+    .btn-danger:hover {
+      background-color: #bb2d3b;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+  }
+
+  .nav-pills {
+    background-color: #e7f1ff;
+
+    .nav-link {
+      color: #0d6efd;
+      font-weight: 600;
+      border-radius: 0;
+      transition: background-color 0.3s ease;
+
+      &.active {
+        background-color: #0d6efd;
+        color: #fff;
+      }
+
+      &:hover:not(.active) {
+        background-color: rgba(13, 110, 253, 0.1);
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+
+/////////////////////////////////
+/// 
+.cardx {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-body1,
+  .card-body2 {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f7f9fc, #ffffff);
+    animation: fadeInUp 0.6s ease both;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .card-body1 {
+    h4 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #333;
+      animation: slideInLeft 0.5s ease forwards;
+    }
+
+    .card-subtitle {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .vstack .hstack {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.4rem 0;
+      transition: all 0.3s ease;
+
+      i {
+        color: #2d2f31;
+        font-size: 1.1rem;
+      }
+
+      h6 {
+        margin: 0;
+        font-weight: 500;
+        color: #444;
+        transition: color 0.3s;
+      }
+
+      &:hover h6 {
+        color: #007bff;
+      }
+    }
+  }
+
+  .card-body2 {
+    h4 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 1rem;
+      animation: slideInRight 0.5s ease forwards;
+    }
+
+    img {
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+iconify-icon {
+  font-size: 1.1rem;
+  color: #7b7e80;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.2);
+    color: #474b4b;
+  }
+}
+
+
+///////////////////////////////////
+/// 
+
+
+
+.custom-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-card-body {
+    padding: 1.5rem;
+  }
+
+  .custom-textarea {
+    border-radius: 10px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+
+    &:focus {
+      border-color: #5e6672;
+      box-shadow: 0 0 0 0.2rem rgba(49, 64, 87, 0.25);
+    }
+  }
+
+  .post-actions {
+    margin-top: 1rem;
+
+    .action-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.3s ease, transform 0.2s ease;
+
+      &.btn-photo {
+        background-color: #e2e3e4;
+        color: white;
+
+        &:hover {
+          background-color: darken(#c2dbf5, 5%);
+          transform: scale(1.1);
+        }
+      }
+
+      &.btn-article {
+        background-color: #e2e3e4;
+        color: white;
+
+        &:hover {
+          background-color: darken(#c2dbf5, 5%);
+          transform: scale(1.1);
+        }
+      }
+
+      .icon {
+        font-size: 1.2rem;
+      }
+    }
+
+    .action-label {
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .btn-post {
+      background-color: #10ccb3;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken(rgb(5, 49, 46), 5%);
+      }
+    }
+  }
+}
+
+/////////////////////////////////
+/// 
+
+// Variables
+$primary: #5d87ff;
+$secondary: #49beff;
+$light: #f5f5f5;
+$radius: 12px;
+$transition: all 0.3s ease;
+
+.post-card {
+  border: 1px solid #eee;
+  border-radius: $radius;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.6s ease-out;
+
+  .post-body {
+    padding: 1.5rem;
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      .avatar {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+
+      .author {
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .timestamp {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        font-size: 0.875rem;
+        color: #888;
+
+        .status-indicator {
+          width: 10px;
+          height: 10px;
+          background: $light;
+          border-radius: 50%;
+          margin-right: 6px;
+        }
+      }
+    }
+
+    .post-content {
+      margin: 1rem 0;
+      color: #333;
+    }
+
+    .post-image {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: $radius;
+      margin-bottom: 1rem;
+      transition: $transition;
+
+      &:hover {
+        transform: scale(1.01);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .post-actions {
+        display: flex;
+        justify-content: center; // horizontally center
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1rem 0;
+
+        .action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .count {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+            }
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; // make it round
+            background-color: #f2f2f2;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+
+            .iconify {
+            font-size: 1.2rem;
+            color: #c5c3c3;
+            }
+
+            &:hover {
+            background-color: #4f46e5; // e.g., indigo
+            .iconify {
+                color: #fff;
+            }
+            }
+        }
+
+        // Optional: For last share button if it’s outside of .action
+        .btn-share {
+            margin-left: auto; // remove this if you want centered layout
+        }
+    }
+
+    .comments {
+      margin-top: 2rem;
+
+      .comment {
+        background-color: $light;
+        border-radius: $radius;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        animation: slideIn 0.4s ease;
+
+        &.reply {
+          margin-left: 2rem;
+        }
+
+        .comment-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 0.5rem;
+
+          .avatar-sm {
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .comment-author {
+            margin: 0;
+            font-weight: 500;
+          }
+
+          .timestamp {
+            font-size: 0.75rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+
+            .status-indicator-sm {
+              width: 8px;
+              height: 8px;
+              background: #ccc;
+              border-radius: 50%;
+              margin-right: 6px;
+            }
+          }
+        }
+
+        .comment-content {
+          margin-bottom: 0.5rem;
+          color: #444;
+        }
+
+       .comment-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding-top: 0.5rem;
+
+        .action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .count {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.85rem;
+            }
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%; // perfect circle
+            background-color: #f2f2f2;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+
+            .iconify {
+            font-size: 1.1rem;
+            color: #555;
+            }
+
+            &:hover {
+            background-color: #6366f1; // soft indigo
+            .iconify {
+                color: #fff;
+            }
+            }
+        }
+
+        // Optional individual hover colors
+        .btn-like:hover {
+            background-color: #10b981; // green
+        }
+
+        .btn-reply:hover {
+            background-color: #3b82f6; // blue
+        }
+        }
+
+      }
+    }
+  }
+
+  .post-comment-form {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    border-top: 1px solid #eee;
+
+    .avatar-sm {
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+    }
+
+    .comment-input {
+      flex-grow: 1;
+      padding: 0.75rem 1rem;
+      border-radius: $radius;
+      border: 1px solid #ddd;
+      transition: $transition;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+///////////////////////
+/// 
+.followers-tab {
+  padding: 1.5rem;
+
+  .followers-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.75rem;
+
+    .followers-title {
+      font-weight: 600;
+      color: #222;
+
+      .followers-count {
+        background-color: #6c757d; // Bootstrap secondary bg color
+        font-weight: 500;
+        padding: 0.25rem 0.6rem;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease;
+      }
+    }
+
+    .followers-search {
+      max-width: 320px;
+
+      .search-input {
+        border-radius: 2rem;
+        padding-left: 2.75rem;
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+        &:focus {
+          box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
+          border-color: #0d6efd;
+          outline: none;
+        }
+      }
+
+      .search-icon {
+        color: #6c757d;
+        font-size: 1.25rem;
+        transition: color 0.3s ease;
+        pointer-events: none; // so clicks go to input
+      }
+    }
+  }
+
+  .followers-list {
+    margin-top: 1rem;
+
+    .follower-card {
+      border-radius: 1rem;
+      background-color: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 20px rgb(0 0 0 / 0.15);
+      }
+
+    .follower-content {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: nowrap;  // prevent wrapping
+
+        .follower-avatar {
+            flex-shrink: 0;  // prevent shrinking
+        }
+
+        .follower-info {
+            flex-grow: 1;  // take remaining space
+            min-width: 0;  // allow truncation if needed
+            overflow: hidden;
+
+            .follower-name {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-bottom: 0.2rem;
+            }
+
+            .follower-location {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+            .iconify {
+                flex-shrink: 0;
+            }
+            }
+        }
+
+        .btn-follow {
+            flex-shrink: 0; // keep button size fixed
+            white-space: nowrap;
+        }
+    }
+
+    }
+  }
+}
+
+
+
+///////////////////
+/// 
+.friends-tab {
+  padding: 1.5rem;
+
+  // Friend Cards grid
+  .row {
+    margin-top: 1rem;
+  }
+
+  .card-friend,
+  .card-friends {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    transition: box-shadow 0.4s ease, transform 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      transform: translateY(-6px);
+    }
+
+    .card-body-friends {
+      border-bottom: 1px solid #eee;
+      padding: 2rem 1.5rem;
+      text-align: center;
+
+      img {
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+      }
+
+      h5 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: #222;
+      }
+
+      span {
+        font-size: 0.9rem;
+        color: #666;
+      }
+    }
+
+    ul {
+      background: #f9f9f9;
+      padding: 0.5rem 0;
+      margin-bottom: 0;
+      border-radius: 0 0 1rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      list-style: none;
+
+      li a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        font-weight: 600;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+        &.text-primary:hover {
+          background-color: #0d6efd;
+          color: #fff !important;
+        }
+        &.text-danger:hover {
+          background-color: #dc3545;
+          color: #fff !important;
+        }
+        &.text-info:hover {
+          background-color: #0dcaf0;
+          color: #fff !important;
+        }
+        &.text-secondary:hover {
+          background-color: #6c757d;
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes pulseBadge {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.75;
+  }
+}
+
+////////////////////////////
+/// 
+/// 
+
+ 
+
+
+.followers-header {
+
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.75rem;
+
+    .followers-title {
+      font-weight: 600;
+      color: #222;
+
+      .followers-count {
+        background-color: #6c757d; // Bootstrap secondary bg color
+        font-weight: 500;
+        padding: 0.25rem 0.6rem;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease;
+      }
+    }
+
+    .followers-search {
+      max-width: 320px;
+
+      .search-input {
+        border-radius: 2rem;
+        padding-left: 2.75rem;
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+        &:focus {
+          box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
+          border-color: #0d6efd;
+          outline: none;
+        }
+      }
+
+      .search-icon {
+        color: #6c757d;
+        font-size: 1.25rem;
+        transition: color 0.3s ease;
+        pointer-events: none; // so clicks go to input
+      }
+    }
+  }
+
+
+///
+/// 
+/// 
+/// 
+
+.gallery-tab{
+  padding: 1.5rem;
+  
+    .card-gallery {
+    position: relative;
+    background-color: #fff;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease both;
+    margin-bottom: 10px;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    img {
+        border-top-left-radius: 0.5rem !important;
+        border-top-right-radius: 0.5rem !important;
+        transition: transform 0.5s ease;
+
+        &:hover {
+        transform: scale(1.03);
+        }
+    }
+
+    .card-body-gallery {
+        padding: 0;
+
+        .p-4 {
+        padding: 1.5rem !important;
+        }
+
+        h6 {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #212529;
+        }
+
+        .fs-2 {
+        font-size: 0.875rem !important;
+        color: #6c757d !important;
+        }
+    }
+
+    .dropdown,
+    .dropdown-gallery {
+        position: relative;
+
+        a {
+        color: #6c757d !important;
+        padding: 0.25rem;
+        display: flex;
+        align-items: center;
+        border-radius: 0.375rem;
+        transition: background 0.3s;
+
+        &:hover {
+            background: #f1f1f1;
+        }
+
+        i {
+            font-size: 1.25rem;
+        }
+        }
+
+        .dropdown-menu {
+        min-width: 200px;
+        padding: 0.5rem 0;
+        border-radius: 0.5rem;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        animation: dropdownFade 0.4s ease-in-out both;
+
+        .dropdown-item,
+        .dropdown-item-gallery {
+            padding: 0.5rem 1rem;
+            color: #212529;
+            font-size: 0.875rem;
+            transition: background 0.3s;
+
+            &:hover {
+            background: #f8f9fa;
+            color: #0d6efd;
+            }
+        }
+        }
+    }
+    }
+
+}
+
+// Entry animation for cards
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Dropdown animation
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+//////

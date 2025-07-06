@@ -1,0 +1,50 @@
+<div class="modal-all p-3 rounded-4 shadow bg-white animate__animated animate__fadeIn">
+  <!-- Header -->
+  <div class="modal-header d-flex justify-content-between align-items-center mb-1 border-bottom pb-1">
+    <h5 class="modal-title fw-bold">View User</h5>
+    <button mat-icon-button (click)="close()" aria-label="Close dialog">
+      <span class="iconify" data-icon="mdi:close" style="font-size: 24px;"></span>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="modal-body">
+    <div class="row g-4">
+      <!-- Avatar Display -->
+      <div class="col-12 col-md-4 text-center avatar-uploader">
+        <img [src]="imageSrc" alt="User Avatar" class="avatar-preview rounded-circle shadow-sm mb-2" width="120" height="120">
+      </div>
+
+      <!-- User Details -->
+      <div class="col-12 col-md-8">
+        <div class="user-details">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Name</label>
+            <p class="form-control-plaintext">{{ data.firstName }} {{ data.lastName }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Email</label>
+            <p class="form-control-plaintext">{{ data.email }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Occupation</label>
+            <p class="form-control-plaintext">{{ data.aboutMe }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Phone</label>
+            <p class="form-control-plaintext">{{ data.phone }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Location</label>
+            <p class="form-control-plaintext">{{ data.address  }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="modal-footer d-flex justify-content-end gap-2 pt-2 border-top">
+    <button mat-button class="btn btn-outline-danger" (click)="close()">Close</button>
+  </div>
+</div>

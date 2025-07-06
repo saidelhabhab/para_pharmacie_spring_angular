@@ -1,0 +1,284 @@
+// keyframes for slide down effect
+@keyframes customSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// topbar container
+.custom-topbar {
+  background-color: #1b4269; // dark background
+  padding: 8px ;
+  border-radius: 0;
+  margin-bottom: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: customSlideDown 0.6s ease-out;
+  transition: opacity 0.3s ease;
+  
+
+  &.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+}
+
+// content layout
+.custom-topbar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+// badge
+.custom-topbar-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #000;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+// text
+.custom-topbar-text {
+  margin: 0;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+// close button
+.custom-topbar-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  opacity: 0.8;
+  color: white;
+
+  &::before {
+    content: '×';
+  }
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+
+//////////////////////////
+/// 
+
+
+@keyframes slideFadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-header {
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .custom-navbar {
+    .custom-logo img {
+      max-height: 40px;
+      transition: transform 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .custom-toggler {
+      border: none;
+      font-size: 1.5rem;
+      color: #333;
+      background: transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: #007bff;
+        transform: rotate(90deg);
+      }
+
+      @media (min-width: 992px) {
+        display: none;
+      }
+    }
+
+    .custom-nav-links {
+      justify-content: flex-end;
+
+      .navbar-nav {
+        align-items: center;
+
+        .nav-item {
+          .custom-link {
+            font-size: 1.125rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            color: #333;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: #007bff;
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              width: 0;
+              height: 2px;
+              bottom: 0;
+              left: 50%;
+              background-color: #007bff;
+              transition: all 0.3s ease;
+              transform: translateX(-50%);
+            }
+
+            &:hover::after {
+              width: 80%;
+            }
+          }
+        }
+      }
+
+      @media (max-width: 991.98px) {
+        display: none;
+      }
+    }
+
+    .custom-login-btn {
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      border-radius: 2rem;
+      transition: all 0.3s ease;
+      background-color: #070707;
+      color: #fff;
+      &:hover {
+        background-color: #007bff;
+        color: #1d1d1d;
+      }
+
+      @media (max-width: 991.98px) {
+        display: none;
+      }
+    }
+  }
+}
+
+// Offcanvas Right – Styled & Animated
+.offcanvas.offcanvas-end {
+  width: 300px;
+  background-color: #ffffff;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease-in-out;
+
+  // Slide-in effect
+  &.show {
+    animation: slideInRight 0.4s ease forwards;
+  }
+
+  .offcanvas-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #eee;
+
+    .custom-logo img {
+      max-height: 40px;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .btn-close {
+      font-size: 1.25rem;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .offcanvas-body {
+    padding: 1.5rem;
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .nav-item {
+        .nav-link {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+          padding: 0.75rem 1rem;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: #f8f9fa;
+            color: #0d6efd;
+            transform: translateX(5px);
+          }
+        }
+      }
+    }
+
+    .btn {
+      margin-top: 2rem;
+      width: 100%;
+      font-weight: 600;
+      padding: 0.75rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background-color: darken(#0d6efd, 10%);
+      }
+    }
+  }
+}
+
+// Keyframes for animation
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

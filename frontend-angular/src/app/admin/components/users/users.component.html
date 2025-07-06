@@ -1,0 +1,167 @@
+
+    <div class="container-fluid">
+      <div class="custom-card">
+        <div class="custom-row">
+          <div class="full-width">
+            <div class="header-bar">
+              <h4 class="page-title">Users</h4>
+              <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb-list">
+                  <li class="breadcrumb-item">
+                    <a href="admin/dashboard" class="breadcrumb-link">
+                      <span class="iconify" data-icon="mdi:home" style="font-size: 20px;"></span>
+                    </a>
+                  </li>
+                  <li class="breadcrumb-item current">
+                    <span class="breadcrumb-badge">Users</span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="widget-content searchable-container list">
+        <div class="card card-body shadow-sm rounded-4 animate-fade-in">
+          <div class="row g-3 align-items-center">
+            <!-- Search -->
+            <div class="col-md-4 col-xl-3">
+              <form [formGroup]="searchForm" class="position-relative">
+                <input
+                  type="text"
+                  formControlName="searchTerm"
+                  placeholder="Search Users..."
+                  class="form-control ps-5 rounded-pill shadow-sm search-input"
+                />
+                <span
+                  class="iconify position-absolute top-50 start-0 translate-middle-y fs-5 text-secondary ms-3"
+                  data-icon="mdi:magnify"
+                ></span>
+              </form>
+
+
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="col-md-8 col-xl-9 d-flex justify-content-md-end justify-content-center flex-wrap gap-2">
+              <a href="javascript:void(0)" 
+                class="btn btn-outline-danger d-flex align-items-center gap-2 delete-multiple animate-hover" 
+                 (click)="deleteAllItem()">
+                <span class="iconify fs-5" data-icon="mdi:delete"></span> Delete All Row
+              </a>
+
+              <a href="javascript:void(0)" 
+                class="btn btn-primary d-flex align-items-center gap-2 animate-hover"
+                (click)="openAddUserDialog()">
+                <span class="iconify text-white fs-5" data-icon="mdi:account-multiple"></span> Add User
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       
+        
+        <div class="card card-body">
+          <div class="table-responsive">
+            <table class="table search-table align-middle text-nowrap">
+              <thead class="header-item m-2">
+                <th>
+                  <div class="n-chk align-self-center text-center">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input primary" id="contact-check-all" />
+                      <label class="form-check-label" for="contact-check-all"></label>
+                      <span class="new-control-indicator"></span>
+                    </div>
+                  </div>
+                </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>Phone</th>
+                <th>Action</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                 <td>
+                        <div class="n-chk align-self-center text-center">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input contact-chkbox primary" id="checkbox1" />
+                            <label class="form-check-label" for="checkbox1"></label>
+                          </div>
+                        </div>
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                      <img [src]="imageMap[user.userId] || '../assets/images/profile/user-10.jpg'"
+                          alt="avatar" class="rounded-circle" width="35" />
+                      <div class="ms-3">
+                        <div class="user-meta-info">
+                          <h6 class="user-name mb-0">{{ user.lastName }}</h6>
+                        <span class="user-work1" [matTooltip]="user.aboutMe">
+                          {{ getAboutMePreview(user.aboutMe) }}
+                        </span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="usr-email-addr">{{ user.email }}</span>
+                  </td>
+                  <td>
+                    <span class="usr-location">{{ user.address }}</span>
+                  </td>
+                  <td>
+                    <span class="usr-ph-no">{{ user.phone }}</span>
+                  </td>
+                  <td>
+                    <div class="action-btn d-flex gap-2">
+                      <!-- View User -->
+                      <a href="javascript:void(0)" class="text-primary edit" (click)="openViewUserDialog(user)">
+                        <span class="iconify fs-5" data-icon="mdi:eye-outline"></span>
+                      </a>
+
+                      <!-- Edit/Update User -->
+                      <a href="javascript:void(0)" class="text-warning update" (click)="openEditUserDialog(user)">
+                        <span class="iconify fs-5" data-icon="mdi:pencil-outline"></span>
+                      </a>
+
+                      <!-- Delete User -->
+                      <a href="javascript:void(0)" class="text-danger delete" (click)="deleteItem()">
+                        <span class="iconify fs-5" data-icon="mdi:delete-outline"></span>
+                      </a>
+                    </div>
+                  </td>
+
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+
+        <div class="pagination-container d-flex justify-content-end mt-3 animate-fadeIn">
+          <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 0">
+              <a class="page-link" (click)="changePage(currentPage - 1)">«</a>
+            </li>
+
+            <li
+              class="page-item"
+              *ngFor="let page of [].constructor(totalPages); let i = index"
+              [class.active]="i === currentPage"
+            >
+              <a class="page-link" (click)="changePage(i)">{{ i + 1 }}</a>
+            </li>
+
+            <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+              <a class="page-link" (click)="changePage(currentPage + 1)">»</a>
+            </li>
+          </ul>
+        </div>
+
+        
+     
+    </div>

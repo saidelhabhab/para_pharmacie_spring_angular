@@ -1,0 +1,154 @@
+<div class="container-fluid">
+  <!-- Page Header -->
+  <div class="custom-card">
+    <div class="custom-row">
+      <div class="full-width">
+        <div class="header-bar">
+          <h4 class="page-title">Product</h4>
+          <nav class="breadcrumb-nav" aria-label="breadcrumb">
+            <ol class="breadcrumb-list">
+              <li class="breadcrumb-item">
+                <a routerLink="/admin/dashboard" class="breadcrumb-link">
+                  <span class="iconify" data-icon="mdi:home" style="font-size: 20px;"></span>
+                </a>
+              </li>
+              <li class="breadcrumb-item current">
+                <span class="breadcrumb-badge">Products</span>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Form -->
+  <form [formGroup]="form" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div class="row">
+      <!-- Left Side (Main Form) -->
+      <div class="col-lg-8">
+        <!-- General Info -->
+        <div class="card general-card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">General</h4>
+
+                <div class="mb-3">
+                <label class="form-label">Product Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="name" />
+                <small class="text-muted">A product name is required and should be unique.</small>
+                </div>
+
+                <div class="mb-3">
+                <label class="form-label">Description</label>
+                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                <ngx-editor [editor]="editor" formControlName="description" placeholder="Type here..."></ngx-editor>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Main Image -->
+        <div class="card upload-card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Main Image</h4>
+
+                <!-- Custom Upload Trigger -->
+                <label class="upload-label">
+                <span class="iconify" data-icon="mdi:upload" data-width="24" data-height="24"></span>
+                <span class="upload-text">Click to upload image</span>
+                <input type="file" (change)="onImageFileChange($event)" accept="image/*" hidden />
+                </label>
+
+                <p class="text-muted mt-2">Upload the main product image.</p>
+            </div>
+        </div>
+
+
+
+        <!-- Gallery Images -->
+        <div class="card upload-card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Gallery Images</h4>
+
+                <!-- Custom Upload Trigger -->
+                <label class="upload-label">
+                <span class="iconify" data-icon="mdi:folder-multiple-image" data-width="24" data-height="24"></span>
+                <span class="upload-text">Click to upload gallery images</span>
+                <input type="file" (change)="onPhotoFilesChange($event)" multiple accept="image/*" hidden />
+                </label>
+
+                <p class="text-muted mt-2">Upload additional gallery photos (optional).</p>
+            </div>
+        </div>
+
+
+        <!-- Pricing -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <h4 class="card-title">Pricing</h4>
+
+            <div class="mb-3">
+              <label class="form-label">Price <span class="text-danger">*</span></label>
+              <input type="number" formControlName="price" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Old Price</label>
+              <input type="number" formControlName="oldPrice" class="form-control" />
+              <small class="text-muted">If provided, the discount will be calculated automatically.</small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Discount (%)</label>
+              <input type="number" formControlName="discount" class="form-control" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit buttons -->
+        <div class="form-actions mt-4 d-flex gap-3">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Right Side (Options) -->
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h4 class="card-title">Details</h4>
+
+            <div class="mb-3">
+              <label class="form-label">Brand</label>
+              <input type="text" formControlName="brand" class="form-control" />
+            </div>
+
+            <div class="mb-3 form-check">
+              <input type="checkbox" formControlName="inStock" class="form-check-input" id="inStockCheck" />
+              <label class="form-check-label" for="inStockCheck">In Stock</label>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Quantity</label>
+              <input type="number" formControlName="quantity" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Category <span class="text-danger">*</span></label>
+              <select formControlName="category" class="form-select">
+                <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tax Class</label>
+              <select formControlName="taxClass" class="form-select">
+                <option *ngFor="let tax of taxClass" [value]="tax">{{ tax }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

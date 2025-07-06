@@ -1,0 +1,147 @@
+<div class="container-fluid">
+      <div class="custom-card">
+        <div class="custom-row">
+          <div class="full-width">
+            <div class="header-bar">
+              <h4 class="page-title">Product</h4>
+              <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb-list">
+                  <li class="breadcrumb-item">
+                    <a href="admin/dashboard" class="breadcrumb-link">
+                      <span class="iconify" data-icon="mdi:home" style="font-size: 20px;"></span>
+                    </a>
+                  </li>
+                  <li class="breadcrumb-item current">
+                    <span class="breadcrumb-badge">Products</span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="widget-content searchable-container list">
+        <div class="card card-body shadow-sm rounded-4 animate-fade-in">
+          <div class="row g-3 align-items-center">
+            <!-- Search -->
+            <div class="col-md-4 col-xl-3">
+              <form class="position-relative">
+                <input 
+                  type="text" 
+                  class="form-control ps-5 rounded-pill shadow-sm search-input" 
+                  id="input-search" 
+                  placeholder="Search Products..." 
+                  [(ngModel)]="searchTerm"
+                  (input)="onSearchChange()" 
+                  name="search"
+                  autocomplete="off"
+                />
+
+                <span 
+                  class="iconify position-absolute top-50 start-0 translate-middle-y fs-5 text-secondary ms-3" 
+                  data-icon="mdi:magnify">
+                </span>
+              </form>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="col-md-8 col-xl-9 d-flex justify-content-md-end justify-content-center flex-wrap gap-2">
+              <a href="javascript:void(0)" 
+                class="btn btn-outline-danger d-flex align-items-center gap-2 delete-multiple animate-hover" 
+                 (click)="deleteAllItem()">
+                <span class="iconify fs-5" data-icon="mdi:delete"></span> Delete All Row
+              </a>
+
+              <a href="javascript:void(0)" 
+                class="btn btn-primary d-flex align-items-center gap-2 animate-hover"
+                (click)="addProduct()">
+                <span class="iconify text-white fs-5" data-icon="mdi:account-multiple"></span> Add Product
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       
+    <mat-card class="cardWithShadow">
+      <mat-card-content>
+        <div class="table-responsive">
+         <table mat-table [dataSource]="dataSource1" class="w-100" matSort>
+
+            <!-- Product Column -->
+            <ng-container matColumnDef="assigned">
+              <th mat-header-cell *matHeaderCellDef> Product </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="d-flex align-items-center">
+                  <img [src]="element.imageUrl ? getFullImagePath(element.imageUrl) : '../assets2/images/products/dash-prd-2.jpg'"  
+                      alt="product image" width="60" class="rounded" />
+                  <div class="ms-3">
+                    <h6>{{ element.name }}</h6>
+                    <p class="mb-0">{{ element.brand }}</p>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Price Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let element">
+                <div>
+                  <h6 class="mb-0">${{ element.price }}</h6>
+                  <span *ngIf="element.oldPrice" class="text-muted text-decoration-line-through">${{ element.oldPrice }}</span>
+                  <span *ngIf="element.discount" class="badge bg-danger ms-2">-{{ element.discount }}%</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="priority">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.inStock" class="badge bg-success">In Stock</span>
+                <span *ngIf="!element.inStock" class="badge bg-danger">Out of Stock</span>
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="budget">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="addProduct()">
+                    <mat-icon>add</mat-icon>
+                    <span>Add</span>
+                  </button>
+                  <button mat-menu-item [routerLink]="['/admin/edit-product', element.productId]">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteItem()">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+          </table>
+
+          <!-- Optional Pagination -->
+          <mat-paginator [length]="totalElements"
+                        [pageSize]="pageSize"
+                        [pageSizeOptions]="[5, 10, 20]"
+                        (page)="onPageChange($event)">
+          </mat-paginator>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+</div>

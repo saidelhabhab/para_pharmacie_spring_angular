@@ -1,0 +1,250 @@
+<app-header></app-header>
+
+  <div class="main-wrapper overflow-hidden">
+
+      <!-- ------------------------------------- -->
+    <!-- Banner Start -->
+    <!-- ------------------------------------- -->
+    <section class="blog-header">
+        <div class="container-fluid">
+            <div class="breadcrumb-nav">
+            <a href="../main/frontend-landingpage.html" class="text-muted">
+                Matdash
+            </a>
+            <span class="iconify arrow-icon" data-icon="solar:alt-arrow-right-outline"></span>
+            <a href="../main/frontend-blogpage.html" class="text-muted">
+                Blog posts
+            </a>
+            <span class="iconify arrow-icon" data-icon="solar:alt-arrow-right-outline"></span>
+            <a href="#" class="active">
+                Web Development
+            </a>
+            </div>
+            
+            <div class="blog-title">
+            <h2>Early Black Friday Amazon deals: cheap TVs, headphones, laptops</h2>
+            </div>
+            
+            <div class="blog-stats">
+            <div class="stat-item">
+                <span class="iconify" data-icon="mdi:eye"></span>
+                <p>6941</p>
+            </div>
+            <div class="stat-item">
+                <span class="iconify" data-icon="mdi:message-text-outline"></span>
+                <p>3</p>
+            </div>
+            <div class="stat-item">
+                <span class="iconify" data-icon="mdi:circle-outline"></span>
+                <p>Tue, May 2</p>
+            </div>
+            </div>
+            
+            <div class="featured-image d-lg-block d-none">
+            <img src="../assets2/images/frontend-pages/blog-detail-banner.jpg" alt="blog detail banner">
+            </div>
+        </div>
+    </section>
+    <!-- ------------------------------------- -->
+    <!-- Banner End -->
+    <!-- ------------------------------------- -->
+
+    <!-- ------------------------------------- -->
+    <!-- Details Start -->
+    <!-- ------------------------------------- -->
+    <section class="blog-content-section">
+        <div class="container-fluid">
+            <div class="row">
+            <div class="blog-sidebar">
+                <div class="sidebar-card">
+                <div class="author-section">
+                    <div class="author-avatar">
+                    <img src="../assets2/images/profile/user-6.jpg" alt="user">
+                    </div>
+                    <div class="author-info">
+                    <p>Zachary Smith</p>
+                    <p>Product Manager</p>
+                    </div>
+                </div>
+                
+                <div class="contents-section">
+                    <h4>Contents</h4>
+                    <div class="content-links">
+                    <a href="#mobile-first-approach">Adopt a Mobile-First Approach</a>
+                    <a href="#fluid-grid-layouts">Use Fluid Grid Layouts</a>
+                    <a href="#leverage-media">Leverage Media Queries</a>
+                    <a href="#optimize-images">Optimize Images for Different Devices</a>
+                    <a href="#conclusion">Conclusion</a>
+                    </div>
+                </div>
+                
+                <div class="share-section">
+                    <h4>Share</h4>
+                    <div class="social-links">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-title="Facebook">
+                        <img src="../assets2/images/frontend-pages/icon-facebook-dark.svg" alt="facebook">
+                    </a>
+                    <a href="#" data-bs-toggle="tooltip" data-bs-title="Instagram">
+                        <img src="../assets2/images/frontend-pages/icon-instagram-dark.svg" alt="instagram">
+                    </a>
+                    <a href="#" data-bs-toggle="tooltip" data-bs-title="YouTube">
+                        <img src="../assets2/images/frontend-pages/icon-youtube-dark.svg" alt="youtube">
+                    </a>
+                    <a href="#" data-bs-toggle="tooltip" data-bs-title="LinkedIn">
+                        <img src="../assets2/images/frontend-pages/icon-linckedin-dark.svg" alt="linkedin">
+                    </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <div class="blog-main-content">
+                <div class="content-card">
+                <p>
+                    In today's digital age, having a responsive website is no longer optional—it's a
+                    necessity. With the increasing variety of devices used to access the web, from
+                    smartphones and tablets to laptops and large desktop monitors, developers face the
+                    challenge of ensuring a seamless experience across all screen sizes.
+                </p>
+                <p>
+                    This article offers essential tips and tricks for modern developers to create
+                    responsive websites that not only look great but also perform efficiently.
+                </p>
+                
+                <div id="mobile-first-approach">
+                    <h3>Adopt a Mobile-First Approach</h3>
+                    <p>
+                    Starting with mobile design and then scaling up is a widely recommended approach. By
+                    prioritizing the mobile experience, developers can ensure that the most critical
+                    content is accessible on smaller screens. Once the mobile version is optimized,
+                    expanding to larger screens becomes much easier.
+                    </p>
+                </div>
+                
+                <div id="fluid-grid-layouts">
+                    <h3>Use Fluid Grid Layouts</h3>
+                    <p>
+                    A fluid grid layout is the backbone of a responsive design. Unlike fixed layouts,
+                    fluid grids use relative units like percentages instead of pixels, allowing the
+                    layout to adjust smoothly across different screen sizes. Popular frameworks like
+                    <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a> and Foundation
+                    offer pre-built grid systems that simplify the
+                    implementation of fluid grids.
+                    </p>
+                </div>
+                
+                <div id="leverage-media">
+                    <h3>Leverage Media Queries</h3>
+                    <p>
+                    Media queries are CSS techniques that apply styles based on the screen size or
+                    device characteristics. By using media queries, developers can create breakpoints in
+                    their design, ensuring that the layout adapts to different screen widths. For
+                    instance, you might want to change the font size or adjust the padding on a smaller
+                    screen. A simple example of a media query is:
+                    </p>
+                    <ul class="list">
+                    <li>
+                        <p>
+                        <span class="fw-bolder">Set Breakpoints</span>: Define breakpoints for
+                        different screen sizes (e.g., 600px, 768px, 1024px) to adjust the layout and design elements.
+                        </p>
+                    </li>
+                    <!-- Other list items -->
+                    </ul>
+                </div>
+                
+                <div id="optimize-images">
+                    <h3>Optimize Images for Different Devices</h3>
+                    <p>
+                    Images can make or break the performance of a website. To ensure that your website
+                    loads quickly on all devices, consider using responsive images. The &lt;picture&gt;
+                    element in HTML5 allows you to serve different images based on the screen size
+                    or resolution. Additionally, tools like
+                    <a href="https://imageoptim.com/" target="_blank">ImageOptim</a>
+                    and
+                    <a href="https://imageoptim.com/" target="_blank">TinyPNG</a>
+                    can help you compress images without sacrificing quality.
+                    </p>
+                </div>
+                
+                <div id="conclusion">
+                    <h3>Conclusion</h3>
+                    <p>
+                    Building responsive websites requires careful planning, testing, and a deep
+                    understanding of both design and development principles. By adopting a mobile-first
+                    approach, leveraging fluid grids and media queries, and optimizing both performance
+                    and accessibility, modern developers can create websites that deliver a seamless
+                    experience across all devices. As the famous saying goes, "A responsive design is
+                    not a luxury; it's a necessity for every website today."
+                    </p>
+                    
+                    <div class="highlight-box">
+                    <p>
+                        "A responsive design is not a luxury; it's a necessity for
+                        every website today."
+                    </p>
+                    </div>
+                    
+                    <p>
+                    For more resources on responsive web design, check out the
+                    <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">
+                        MDN Web Docs and Smashing
+                    </a>
+                    Magazine's Guide.
+                    </p>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- ------------------------------------- -->
+    <!-- Details End -->
+    <!-- ------------------------------------- -->
+
+    <!-- ------------------------------------- -->
+    <!-- Focus Start -->
+    <!-- ------------------------------------- -->
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Focus Start -->
+    <!-- ------------------------------------- -->
+    <section class="hero-section position-relative">
+        <div class="screenshot-left position-absolute top-50 start-0 translate-middle-y d-none d-xxl-block">
+            <img src="../assets2/images/frontend-pages/screenshot-1.png" alt="screenshot left">
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+            <div class="col-lg-9 text-center hero-content">
+                <a class="hero-logo shadow bg-white" href="../main/frontend-landingpage.html">
+                <img src="../assets2/images/logos/logo-icon.svg" alt="logo">
+                </a>
+                <h2 class="hero-title">
+                Focus on what truly matters—creating stunning, functional designs.
+                </h2>
+                <p class="hero-subtitle">
+                Designed for ease of use and customization, this template helps you build professional dashboards faster.
+                </p>
+                <a href="../main/authentication-register.html" class="btn btn-outline-light btn-register">
+                Register
+                </a>
+            </div>
+            </div>
+        </div>
+
+        <div class="screenshot-right position-absolute top-50 end-0 translate-middle-y d-none d-xxl-block">
+            <img src="../assets2/images/frontend-pages/screenshot-2.png" alt="screenshot right">
+        </div>
+    </section>
+
+    <!-- ------------------------------------- -->
+    <!-- Focus End -->
+    <!-- ------------------------------------- -->
+  </div>
+
+
+<app-footer></app-footer>
+

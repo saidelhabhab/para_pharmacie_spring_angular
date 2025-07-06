@@ -1,0 +1,124 @@
+.custom-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  margin-bottom: 10px;
+  border: 0.5px solid #a0a1a180; // Light gray outline
+
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.breadcrumb-nav {
+  margin-left: auto;
+}
+
+.breadcrumb-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.breadcrumb-badge {
+  background-color: #e0f0ff;
+  color: #007bff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+//////////////////////////////
+
+.product-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .price-current {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #28a745; // green for discounted price
+  }
+
+  .price-old {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.8rem;
+  }
+
+  .price-badge {
+    font-size: 0.5rem;
+    padding: 1px 3px;
+    border-radius: 4px;
+    background-color: #dc3545; // Bootstrap danger
+    color: white;
+    font-weight: 500;
+  }
+}
+

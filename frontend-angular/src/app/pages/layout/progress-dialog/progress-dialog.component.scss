@@ -1,0 +1,13 @@
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+
+  p {
+    margin-top: 15px;
+    font-weight: 500;
+    color: #444;
+  }
+}

@@ -1,0 +1,31 @@
+.modal-all {
+ width: 559px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 20px;
+  animation-duration: 0.3s;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #e0e0e0;
+  transition: transform 0.3s;
+}
+
+.avatar-preview:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .modal-all {
+    padding: 1rem !important;
+  }
+
+  .avatar-preview {
+    width: 100px;
+    height: 100px;
+  }
+}

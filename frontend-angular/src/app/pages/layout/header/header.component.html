@@ -1,0 +1,52 @@
+<div class="topbar-image custom-topbar " role="alert">
+  <div class="custom-topbar-content">
+    <span class="custom-topbar-badge">New</span>
+    <p class="custom-topbar-text">Frontend Pages Included!</p>
+  </div>
+<button type="button" class="custom-topbar-close" (click)="closeTopbar()" aria-label="Close"></button>
+</div>
+
+
+<header class="custom-header">
+  <nav class="custom-navbar navbar navbar-expand-lg">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <a href="/" class="custom-logo">
+        <img src="../assets/images/logos/logo.svg" alt="Logo" />
+      </a>
+      <button class="custom-toggler navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        <span class="iconify text-dark fs-4 me-2" data-icon="mdi:menu"></span> 
+      </button>
+      <div class="collapse navbar-collapse custom-nav-links" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto gap-lg-5 gap-3">
+          <li class="nav-item"><a class="custom-link" href="shop">Shop</a></li>
+          <li class="nav-item"><a class="custom-link" href="blog">Blog</a></li>
+          <li class="nav-item"><a class="custom-link" href="/admin/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="custom-link" href="about">About Us</a></li>
+          <li class="nav-item"><a class="custom-link" href="contact">Contact</a></li>
+        </ul>
+        <a href="auth/login" class="btn  custom-login-btn">Log In</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<!-- Mobile Menu Offcanvas -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <a href="/" class="custom-logo">
+      <img src="../assets/images/logos/logo.svg" alt="Logo" />
+    </a>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="shop">Shop</a></li>
+      <li class="nav-item"><a class="nav-link" href="blog">Blog</a></li>
+      <li class="nav-item"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="about">About Us</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
+    </ul>
+    <a href="auth/login" class="btn btn-primary">Log In</a>
+  </div>
+</div>

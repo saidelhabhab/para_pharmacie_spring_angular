@@ -1,0 +1,448 @@
+.custom-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  margin-bottom: 10px;
+  border: 0.5px solid #a0a1a180; // Light gray outline
+
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.breadcrumb-nav {
+  margin-left: auto;
+}
+
+.breadcrumb-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.breadcrumb-badge {
+  background-color: #e0f0ff;
+  color: #007bff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+///////////////////////////////////
+
+
+
+// Keyframes for subtle pulse animation
+@keyframes pulseBorder {
+  0% {
+    box-shadow: 0 0 0px rgba(13, 110, 253, 0.0);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(13, 110, 253, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(13, 110, 253, 0.0);
+  }
+}
+
+
+
+.card{
+
+  border: 1px solid #dee2e6;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(13, 110, 253, 0.15);
+  }
+}
+
+
+.card.general-card {
+  border: 1px solid #dee2e6;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(13, 110, 253, 0.15);
+  }
+
+  .card-body {
+    padding: 1.5rem;
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0d6efd;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #495057;
+    }
+
+    input[type="text"] {
+      border-radius: 0.5rem;
+      padding: 0.625rem 1rem;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      &:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+      }
+    }
+
+    .text-muted {
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      display: block;
+      color: #6c757d;
+    }
+
+    
+
+    
+  }
+}
+
+
+.card.upload-card {
+  border: 1px solid #dee2e6;
+  border-radius: 1rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(13, 110, 253, 0.15);
+  }
+
+  .card-body {
+    padding: 1.5rem;
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0d6efd;
+      margin-bottom: 1rem;
+    }
+
+    .upload-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      border: 2px dashed #ced4da;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      width: 100%; // 👈 makes the button span the full width of the card
+      justify-content: center; // 👈 center icon + text
+
+      &:hover {
+        border-color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.05);
+      }
+
+      .iconify {
+        color: #0d6efd;
+      }
+
+      .upload-text {
+        font-weight: 500;
+        color: #495057;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+    }
+
+    .text-muted {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-top: 0.75rem;
+    }
+  }
+}
+
+
+
+/////////////////////////////////////////////////
+
+
+.email-repeater {
+  background: #fdfdfd;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.03);
+
+  label.form-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: #343a40;
+  }
+
+  [data-repeater-item] {
+    animation: fadeSlideIn 0.4s ease-in-out;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    position: relative;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control {
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+      }
+    }
+
+    .btn {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: rgba(220, 53, 69, 0.1);
+        transform: scale(1.1);
+      }
+
+      i {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  [data-repeater-create] {
+    margin-top: 1rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background-color: rgba(13, 110, 253, 0.1);
+      transform: scale(1.02);
+    }
+
+    span {
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+  }
+}
+
+// Entrance animation
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+///////////////////////////////////////////
+
+   
+
+  [data-repeater-create] {
+    margin-top: 1rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background-color: rgba(13, 110, 253, 0.1);
+      transform: scale(1.02);
+    }
+
+    span {
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+  }
+
+
+//////////////////////////
+/// 
+/// 
+/// 
+
+
+
+
+// Styles for the ng-select container
+:host ::ng-deep .ng-select02 {
+  
+  width: 90%;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+
+  .ng-select-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #ced4da;
+    padding: 0.25rem 0.5rem;
+    background-color: #f8f9fa;
+    min-height: 44px;
+    border-radius: 8px;
+
+  }
+
+  .ng-placeholder {
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  .ng-value {
+    background-color: #098a6e;
+    border-radius: 15px;
+    padding: 3px 10px;
+    margin: 3px;
+    display: flex;
+    align-items: center;
+    color: #fffefe;
+    font-weight: 500;
+
+    .ng-value-icon {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+     &:hover {
+        color: #d4d3d3; // Darker red on hover
+      }
+  }
+
+  .ng-dropdown-panel {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #e7e9eb;
+    border: solid 1px  #bbbbbb;
+    .ng-option {
+      padding: 10px 15px;
+      cursor: pointer;
+
+      &.ng-option-selected {
+        background-color: #33d5eb;
+        color: rgb(58, 57, 57);
+      }
+
+      &:hover {
+        background-color: #a2e4ec;
+      }
+    }
+  }
+}
+
+
+
+// Label styling
+label.form-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  display: inline-block;
+  color: #343a40;
+}
+
+// Helper text
+p.text-muted.mb-0 {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}

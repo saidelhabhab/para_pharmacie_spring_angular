@@ -1,0 +1,377 @@
+<app-header></app-header>
+
+        
+
+<div class="body">
+         
+        <section class="section-articles">
+            <div class="container-fluid">
+                <div class="articles-header">
+                <h2 class="articles-title">
+                    Product 
+                </h2>
+                <div class="articles-links">
+                    <a href="/" class="link-matdash">
+                    Home
+                    </a>
+                    <span class="iconify arrow-icon" data-icon="solar:alt-arrow-right-outline"></span>
+                    <a  class="link-blog">
+                    Product Detail
+                    </a>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="product-details" *ngIf="product as p">
+            <div class="product" >
+              
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div  class="image-official">
+                      <div class="item rounded overflow-hidden">
+                         <img 
+                            [src]="p.imageUrl ? getFullImagePath(p.imageUrl) : '../assets2/images/products/dash-prd-2.jpg'"  
+                            alt="product image" 
+                            class="img-fluid" 
+                          />                      
+                      </div>
+                      
+                    </div>
+
+                    <div  class="images" >
+                    <!-- Petites images -->
+                      <div class="row">
+                        <div class="item rounded overflow-hidden" *ngFor="let img of p.photoUrls">
+                          <img [src]="getFullImagePath(img)" alt="product thumb" class="img-fluid" />
+                        </div>
+                      </div>
+                    
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="shop-dea">
+                      <div class="d-flex align-items-center gap-2 mb-2">
+                         <span class="stock-badge" [ngClass]="{'text-success': p.inStock, 'text-danger': !p.inStock}">
+                            {{ p.inStock ? 'In Stock' : 'Out of Stock' }}
+                          </span>
+                          <span class="fs-6">{{ p.category }}</span> 
+                      </div>
+
+                      <!-- Informations -->
+                      <h4 class="blue-underline">{{ p.name }}</h4>
+                      <p class="mb-3">{{ getShortDescription(p.description, 8) }}</p>
+
+                      <h4 class="fw-semibold mb-3">
+                        <del class="fs-5 text-muted" *ngIf="p.oldPrice && p.oldPrice > p.price">
+                          {{ p?.oldPrice }} MAD 
+                        </del>  &nbsp;
+                        {{ p?.price }} MAD
+                      </h4>
+                      <div class="d-flex align-items-center gap-8 pb-4 border-bottom">
+                        <ul class="list-unstyled d-flex align-items-center mb-0">
+                          <li>
+                            <a class="me-1" href="javascript:void(0)">
+                                <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="me-1" href="javascript:void(0)">
+                                <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="me-1" href="javascript:void(0)">
+                                <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="me-1" href="javascript:void(0)">
+                                <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0)">
+                                <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                            </a>
+                          </li>
+                        </ul>
+                        <a href="javascript:void(0)">(236 reviews)</a>
+                      </div>
+                    
+                      <div class="d-flex align-items-center gap-7 pb-7 mb-7 border-bottom">
+                       <h6 class="mb-0 fs-4 fw-semibold">QTY:</h6>
+                      <form [formGroup]="quantityForm">
+                        <div class="quantity-selector">
+                          <button class="qty-btn decrement" type="button" (click)="decreaseQty()">
+                            <span class="iconify" data-icon="mdi:minus"></span>
+                          </button>
+                          <input type="number" class="qty-input" formControlName="quantity" min="1" aria-label="Quantity" />
+                          <button class="qty-btn increment" type="button" (click)="increaseQty()">
+                            <span class="iconify" data-icon="mdi:plus"></span>
+                          </button>
+                        </div>
+                      </form>
+
+                    </div>
+
+                    <div class="d-sm-flex align-items-center gap-6 pt-8 mb-7">
+                      <button class="btn d-block btn-primary px-5 py-8 mb-6 mb-sm-0" (click)="buyNow(product)">
+                        Buy Now
+                      </button>
+                      <button class="btn d-block btn-danger px-7 py-8" (click)="addToCart(product)">
+                        Add to Cart
+                      </button>
+                    </div>
+
+                      <p class="mb-0">Dispatched in 2-3 weeks</p>
+                      <a href="javascript:void(0)">Why the longer time for delivery?</a>
+                    </div>
+                  </div>
+                </div>
+              
+            </div>
+            <div class="description">
+              <div class="card-body p-4">
+                <ul class="nav nav-pills user-profile-tab border-bottom" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link position-relative rounded-0 active d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-description-tab" data-bs-toggle="pill" data-bs-target="#pills-description" type="button" role="tab" aria-controls="pills-description" aria-selected="true">
+                      Description
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center bg-transparent fs-3 py-6" id="pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#pills-reviews" type="button" role="tab" aria-controls="pills-reviews" aria-selected="false">
+                      Reviews
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content pt-4" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab" tabindex="0">
+<p class="mb-3" [innerHTML]="sanitizeHtml(p.description)"></p>
+                  </div>
+                  <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab" tabindex="0">
+                    <div class="row">
+                      <div class="col-lg-4 d-flex align-items-stretch">
+                        <div class="card shadow-none border w-100 mb-7 mb-lg-0">
+                          <div class="card-body text-center p-4 d-flex flex-column justify-content-center">
+                            <h6 class="mb-3">Average Rating</h6>
+                            <h2 class="text-primary mb-3 fw-semibold fs-9">4/5</h2>
+                            <ul class="list-unstyled d-flex align-items-center justify-content-center mb-0">
+                              <li>
+                                <a class="me-1" href="javascript:void(0)">
+                                  <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="me-1" href="javascript:void(0)">
+                                    <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="me-1" href="javascript:void(0)">
+                                    <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                                </a>
+                              </li>
+                              <li>
+                                <a class="me-1" href="javascript:void(0)">
+                                  <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="javascript:void(0)">
+                                    <span class="iconify" data-icon="mdi:star" style="color: #ffc107;"></span>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex align-items-stretch">
+                        <div class="card shadow-none border w-100 mb-7 mb-lg-0">
+                          <div class="card-body p-4 d-flex flex-column justify-content-center">
+
+                            <div class="d-flex align-items-center gap-9 mb-1">
+                              <span class="flex-shrink-0 fs-4">1 Stars</span>
+                              <div class="progress bg-primary-subtle w-100 h-4">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;"></div>
+                              </div>
+                              <h6 class="mb-0">(485)</h6>
+                            </div>
+                            <div class="d-flex align-items-center gap-9 mb-1">
+                              <span class="flex-shrink-0 fs-4">2 Stars</span>
+                              <div class="progress bg-primary-subtle w-100 h-4">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                              </div>
+                              <h6 class="mb-0">(215)</h6>
+                            </div>
+                            <div class="d-flex align-items-center gap-9 mb-1">
+                              <span class="flex-shrink-0 fs-4">3 Stars</span>
+                              <div class="progress bg-primary-subtle w-100 h-4">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"></div>
+                              </div>
+                              <h6 class="mb-0">(110)</h6>
+                            </div>
+                            <div class="d-flex align-items-center gap-9 mb-1">
+                              <span class="flex-shrink-0 fs-4">4 Stars</span>
+                              <div class="progress bg-primary-subtle w-100 h-4">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+                              </div>
+                              <h6 class="mb-0">(620)</h6>
+                            </div>
+                            <div class="d-flex align-items-center gap-9">
+                              <span class="flex-shrink-0 fs-4">5 Stars</span>
+                              <div class="progress bg-primary-subtle w-100 h-4">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" style="width: 12%;"></div>
+                              </div>
+                              <h6 class="mb-0">(160)</h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex align-items-stretch">
+                        <div class="card shadow-none border w-100 mb-7 mb-lg-0">
+                          <div class="card-body p-4 d-flex flex-column justify-content-center">
+                            <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2 mx-auto">
+                                <span class="iconify" data-icon="mdi:pencil"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+        </div>
+
+
+        <div class="product-recommendations">
+        <h4 class="section-title">Related Products</h4>
+        
+        <div class="product-grid row">
+            <!-- Product 1 -->
+            <div class="product-col">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                <a href="#" class="d-block">
+                    <img src="../assets2/images/products/s2.jpg" alt="Body Lotion" class="product-image">
+                </a>
+                <span class="product-badge">-10%</span>
+                <div class="product-actions">
+                    <a href="#" class="action-btn" title="Quick View">
+                    <span class="iconify" data-icon="mdi:eye-outline"></span>
+                    </a>
+                    <a href="#" class="action-btn" title="Add to Wishlist">
+                    <span class="iconify" data-icon="mdi:heart-outline"></span>
+                    </a>
+                    <a href="#" class="action-btn" title="Add to Cart">
+                    <span class="iconify" data-icon="mdi:cart-outline"></span>
+                    </a>
+                </div>
+                </div>
+                <div class="product-details">
+                <h6 class="product-title">Body Lotion</h6>
+                <div class="price-section">
+                    <div class="price-wrapper">
+                    <span class="current-price">$89</span>
+                    <span class="original-price">$99</span>
+                    </div>
+                    <div class="rating-stars">
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-col">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                <a href="#" class="d-block">
+                    <img src="../assets2/images/products/s4.jpg" alt="Glossy Solution" class="product-image">
+                </a>
+                <span class="product-badge">Sale</span>
+                <div class="product-actions">
+                    <a href="#" class="action-btn" title="Quick View">
+                    <span class="iconify" data-icon="mdi:eye-outline"></span>
+                    </a>
+                    <a href="#" class="action-btn" title="Add to Wishlist">
+                    <span class="iconify" data-icon="mdi:heart-outline"></span>
+                    </a>
+                    <a href="#" class="action-btn" title="Add to Cart">
+                    <span class="iconify" data-icon="mdi:cart-outline"></span>
+                    </a>
+                </div>
+                </div>
+                <div class="product-details">
+                <h6 class="product-title">Glossy Solution</h6>
+                <div class="price-section">
+                    <div class="price-wrapper">
+                    <span class="current-price">$50</span>
+                    <span class="original-price">$65</span>
+                    </div>
+                    <div class="rating-stars">
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-col">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                <a href="#" class="d-block">
+                    <img src="../assets2/images/products/s5.jpg" alt="Derma-E" class="product-image">
+                </a>
+                <span class="product-badge">Limited</span>
+                <div class="product-actions">
+                    <a href="#" class="action-btn" title="Quick View">
+                    <span class="iconify" data-icon="mdi:eye-outline"></span>
+                    </a>
+                    <a href="#" class="action-btn" title="Add to Wishlist">
+                    <span class="iconify" data-icon="mdi:heart-outline"></span>
+                    </a>
+                    <a href="#" class="action-btn" title="Add to Cart">
+                    <span class="iconify" data-icon="mdi:cart-outline"></span>
+                    </a>
+                </div>
+                </div>
+                <div class="product-details">
+                <h6 class="product-title">Derma-E</h6>
+                <div class="price-section">
+                    <div class="price-wrapper">
+                    <span class="current-price">$650</span>
+                    <span class="original-price">$900</span>
+                    </div>
+                    <div class="rating-stars">
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    <span class="iconify star" data-icon="mdi:star"></span>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+       
+
+
+<app-footer></app-footer>
+

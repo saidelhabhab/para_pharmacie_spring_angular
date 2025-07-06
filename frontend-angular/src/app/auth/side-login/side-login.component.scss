@@ -1,0 +1,308 @@
+#login-wrapper {
+
+  
+  .auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .auth-inner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+
+
+  .auth-card1 {
+    background: #fff;
+    max-width: 900px ;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.7s ease;
+  }
+
+  .form-section {
+    padding: 2rem 3rem;
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 1rem;
+
+      img {
+        height: 40px;
+      }
+    }
+
+    .welcome-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .social-btn {
+        flex: 1;
+        padding: 0.7rem;
+        border: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+
+        &.facebook:hover {
+          background-color: #3b5998;
+          color: #fff;
+        }
+
+        &.google:hover {
+          background-color: #db4437;
+          color: #fff;
+        }
+
+        img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    .separator {
+      text-align: center;
+      position: relative;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+      color: #999;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 20%;
+        height: 1px;
+        background: #ddd;
+      }
+
+      &::before {
+        left: 0;
+      }
+
+      &::after {
+        right: 0;
+      }
+    }
+
+    .login-form {
+      .input-group {
+        margin-bottom: 1.2rem;
+
+        label {
+          font-weight: 600;
+          margin-bottom: 0.4rem;
+          display: block;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.6rem;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          transition: border 0.3s;
+
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+          }
+        }
+
+        .forgot-link {
+          font-size: 0.85rem;
+          float: right;
+          margin-top: 0.2rem;
+          color: #007bff;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .form-check {
+        margin-bottom: 1rem;
+
+        input {
+          margin-right: 0.5rem;
+        }
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        background-color: #343a40;
+        color: white;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #212529;
+        }
+      }
+
+      .signup-link {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+
+        a {
+          color: #007bff;
+          text-decoration: none;
+          margin-left: 0.4rem;
+          font-weight: bold;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .carousel-section {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  .carousel-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      width: 280px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    h4 {
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: #666;
+      max-width: 300px;
+    }
+
+    // 🌟 New style for Learn More button
+    .learn-more-btn {
+      margin-top: 1rem;
+      padding: 0.6rem 1.4rem;
+      background: linear-gradient(135deg, #007bff, #00b4ff);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+      transition: all 0.35s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #0056b3, #0080ff);
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  // 🌟 Carousel indicator custom style
+  #login-carousel {
+    .carousel-indicators {
+      bottom: 30px;
+
+      [data-bs-target] {
+        width: 12px;
+        height: 12px;
+        background-color: #007bff;
+        border-radius: 50%;
+        opacity: 0.5;
+        transition: all 0.3s ease;
+
+        &.active {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+  }
+}
+}
+
+// Optional float animation for the image
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+
+
+  
+}

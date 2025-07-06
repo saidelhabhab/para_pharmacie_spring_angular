@@ -1,0 +1,57 @@
+<!-- edit-user.component.html -->
+<div class="modal-all p-4 rounded-4 shadow bg-white animate__animated animate__fadeIn">
+  <!-- Header -->
+  <div class="modal-header d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+    <h5 class="modal-title fw-bold">Edit User</h5>
+    <button mat-icon-button (click)="close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="modal-body">
+    <div class="row g-4">
+      <!-- Avatar Upload -->
+      <div class="col-12 col-md-4 text-center avatar-uploader">
+        
+        <img [src]="imageSrc || '../assets/images/profile/user-10.jpg'" alt="User Avatar" class="avatar-preview rounded-circle shadow-sm mb-2" width="120" height="120">
+        <input type="file" #fileInput accept="image/*" hidden (change)="onFileSelected($event)">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="fileInput.click()">
+          <span class="iconify" data-icon="mdi:image-plus"></span> Upload Image
+        </button>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="col-12 col-md-8">
+        <form [formGroup]="userForm" novalidate>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Name</label>
+            <input type="text" formControlName="name" class="form-control" placeholder="Enter name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Email</label>
+            <input type="email" formControlName="email" class="form-control" placeholder="example@mail.com">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Occupation</label>
+            <input type="text" formControlName="occupation" class="form-control" placeholder="e.g. Developer">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Phone</label>
+            <input type="tel" formControlName="phone" class="form-control" placeholder="+212 6 XX XX XX XX">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Location</label>
+            <input type="text" formControlName="location" class="form-control" placeholder="e.g. Rabat, Morocco">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="modal-footer d-flex justify-content-end gap-2 pt-3 border-top">
+    <button mat-button class="btn btn-outline-danger" (click)="close()">Cancel</button>
+    <button class="btn btn-primary" [disabled]="userForm.invalid" (click)="submit()">Update</button>
+  </div>
+</div>

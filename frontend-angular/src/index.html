@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>SAID ELHABHAB</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+ <!-- Core Css -->
+ <link rel="stylesheet" href="assets2/css/styles.css" />
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body class="mat-typography">
+  <app-root></app-root>
+
+
+
+  <script src="assets2/js/vendor.min.js"></script>
+  <!-- Import Js Files -->
+  <script src="assets2/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets2/libs/simplebar/dist/simplebar.min.js"></script>
+  <script src="assets2/js/theme/app.init.js"></script>
+  <script src="assets2/js/theme/theme.js"></script>
+  <script src="assets2/js/theme/app.min.js"></script>
+  <script src="assets2/js/theme/sidebarmenu.js"></script>
+
+
+  <script src="assets2/libs/owl.carousel/dist/owl.carousel.min.js"></script>
+  <script src="assets2/js/apps/productDetail.js"></script>
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+  <!-- highlight.js (code view) -->
+  <script src="assets2/js/highlights/highlight.min.js"></script>
+  <script>
+  hljs.initHighlightingOnLoad();
+
+
+  document.querySelectorAll("pre.code-view > code").forEach((codeBlock) => {
+    codeBlock.textContent = codeBlock.innerHTML;
+  });
+</script>
+  <script src="assets2/libs/fullcalendar/index.global.min.js"></script>
+
+  <script>
+    $(function () {
+    // product detail
+  
+    var sync1 = $("#sync1");
+    var sync2 = $("#sync2");
+    var slidesPerPage = 4;
+    var syncedSecondary = true;
+  
+    sync1
+      .owlCarousel({
+        items: 1,
+        slideSpeed: 2000,
+        nav: false,
+        autoplay: false,
+        dots: true,
+        loop: true,
+        rtl: true,
+        responsiveRefreshRate: 200,
+        navText: [
+          '<svg width="12" height="12" height="100%" viewBox="0 0 11 20"><path style="fill:none;stroke-width: 3px;stroke: #fff;" d="M9.554,1.001l-8.607,8.607l8.607,8.606"/></svg>',
+          '<svg width="12" height="12" viewBox="0 0 11 20" version="1.1"><path style="fill:none;stroke-width: 3px;stroke: #fff;" d="M1.054,18.214l8.606,-8.606l-8.606,-8.607"/></svg>',
+        ],
+      })
+      .on("changed.owl.carousel", syncPosition);
+  
+    sync2
+      .on("initialized.owl.carousel", function () {
+        sync2.find(".owl-item").eq(0).addClass("current");
+      })
+      .owlCarousel({
+        items: slidesPerPage,
+        items: 6,
+        margin: 16,
+        dots: true,
+        nav: false,
+        rtl: true,
+        smartSpeed: 200,
+        slideSpeed: 500,
+        slideBy: slidesPerPage,
+        responsiveRefreshRate: 100,
+      })
+      .on("changed.owl.carousel", syncPosition2);
+  
+    function syncPosition(el) {
+      var count = el.item.count - 1;
+      var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+  
+      if (current < 0) {
+        current = count;
+      }
+      if (current > count) {
+        current = 0;
+      }
+  
+      sync2
+        .find(".owl-item")
+        .removeClass("current")
+        .eq(current)
+        .addClass("current");
+      var onscreen = sync2.find(".owl-item.active").length - 1;
+      var start = sync2.find(".owl-item.active").first().index();
+      var end = sync2.find(".owl-item.active").last().index();
+  
+      if (current > end) {
+        sync2.data("owl.carousel").to(current, 100, true);
+      }
+      if (current < start) {
+        sync2.data("owl.carousel").to(current - onscreen, 100, true);
+      }
+    }
+  
+    function syncPosition2(el) {
+      if (syncedSecondary) {
+        var number = el.item.index;
+        sync1.data("owl.carousel").to(number, 100, true);
+      }
+    }
+  
+    sync2.on("click", ".owl-item", function (e) {
+      e.preventDefault();
+      var number = $(this).index();
+      sync1.data("owl.carousel").to(number, 300, true);
+    });
+  });
+  
+  </script>
+  
+
+</body>
+
+</html>

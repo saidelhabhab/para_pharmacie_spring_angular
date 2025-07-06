@@ -1,0 +1,17 @@
+.modal-all {
+  max-width: 100%;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 600px;
+  }
+}
+
+.avatar-uploader img {
+  object-fit: cover;
+  border: 2px solid #ddd;
+  transition: transform 0.3s ease;
+}
+
+.avatar-uploader img:hover {
+  transform: scale(1.05);
+}

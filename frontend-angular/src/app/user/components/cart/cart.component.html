@@ -1,0 +1,51 @@
+<div class="cart-container">
+    <div class="cart-header">
+    <span class="iconify cart-icon" data-icon="mdi:cart" aria-hidden="true"></span>
+    <h2 class="sr-only">Mon Panier</h2>
+    </div>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <p>Votre panier est vide.</p>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-list">
+    <div class="cart-item" *ngFor="let item of cartItems" [@fadeIn]>
+      <img
+        class="product-image"
+        [src]="getProductImage(item.productId)"
+        [alt]="item.productName"
+      />
+
+      <div class="product-details">
+        <h3>{{ item.productName }}</h3>
+        <p class="price">Prix unitaire : {{ item.price | number:'1.2-2' }} MAD</p>
+
+       
+      </div>
+
+       <div class="quantity-control">
+          <button (click)="decreaseQuantity(item)" aria-label="Diminuer la quantité">-</button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="increaseQuantity(item)" aria-label="Augmenter la quantité">+</button>
+        </div>
+
+        <p class="total">Total : {{ (item.price * item.quantity) | number:'1.2-2' }} MAD</p>
+
+      <button class="remove-btn" (click)="removeItem(item.productId)" aria-label="Supprimer">
+        <span class="iconify" data-icon="mdi:delete"></span>
+      </button>
+    </div>
+
+    <div class="cart-summary">
+      <strong>Total panier : </strong> {{ getTotal() | number:'1.2-2' }} MAD
+    </div>
+  </div>
+
+    <div class="checkout-container" *ngIf="cartItems.length > 0">
+        <button class="checkout-btn" (click)="placeOrder()">
+            <span class="iconify" data-icon="mdi:cart-check" style="margin-right: 8px;"></span>
+            Passer la commande
+        </button>
+
+    </div>
+</div>

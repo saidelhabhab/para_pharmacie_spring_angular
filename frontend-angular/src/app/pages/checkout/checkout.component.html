@@ -1,0 +1,264 @@
+<app-header></app-header>
+
+        
+
+<div class="body">
+  <section class="section-articles">
+    <div class="container-fluid">
+      <div class="articles-header">
+        <h2 class="articles-title">Check Out</h2>
+        <div class="articles-links">
+          <a href="/" class="link-matdash">Home</a>
+          <span class="iconify arrow-icon" data-icon="solar:alt-arrow-right-outline"></span>
+          <a class="link-blog">Checkout Page</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="checkout-container">
+    <mat-stepper #stepper linear>
+      <!-- Step 1: Cart -->
+      <mat-step [stepControl]="cartFormGroup" [completed]="cartCompleted">
+        <form [formGroup]="cartFormGroup">
+          <ng-template matStepLabel>Cart</ng-template>
+
+          <div class="cart-content">
+
+            <!-- Panier vide -->
+            <div *ngIf="cartItems.length === 0" class="empty-cart">
+              <p>🛒 Votre panier est vide.</p>
+            </div>
+
+            <!-- Panier rempli -->
+            <div *ngIf="cartItems.length > 0" class="cart-list">
+              <div class="cart-item" *ngFor="let item of cartItems" [@fadeIn]>
+                
+                <img
+                  class="product-image"
+                  [src]="getProductImage(item.productId)"
+                  [alt]="item.productName"
+                />
+
+                <div class="product-details">
+                  <h3>{{ item.productName }}</h3>
+                  <p class="price">Prix unitaire : {{ item.price | number:'1.2-2' }} MAD</p>
+                </div>
+
+                <div class="quantity-control">
+                  <button (click)="decreaseQuantity(item)" aria-label="Diminuer la quantité">-</button>
+                  <span>{{ item.quantity }}</span>
+                  <button (click)="increaseQuantity(item)" aria-label="Augmenter la quantité">+</button>
+                </div>
+
+                <p class="total">Total : {{ (item.price * item.quantity) | number:'1.2-2' }} MAD</p>
+
+                <button class="remove-btn" (click)="removeItem(item.productId)" aria-label="Supprimer">
+                  <span class="iconify" data-icon="mdi:delete"></span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Résumé commande -->
+            <div *ngIf="cartItems.length > 0" class="order-summary">
+              <h5 class="summary-title">Order Summary</h5>
+              <div class="summary-row">
+                <span>Sub Total</span>
+                <span>{{ subTotal | currency }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Discount </span>
+                <span class="text-danger">-{{ discount | currency }}</span>
+              </div>
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span>Free</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total panier :</span>
+                <span> {{ getTotal() | number:'1.2-2' }}  MAD</span>
+              </div>
+            </div>
+          
+
+
+          <div class="stepper-actions" *ngIf="cartItems && cartItems.length > 0">
+            <button  mat-flat-button matStepperNext color="primary" [disabled]="!cartFormGroup.valid">
+              Continue to Billing
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 2: Billing & Address -->
+      <mat-step  [stepControl]="billingFormGroup" [completed]="billingCompleted">
+        <form [formGroup]="billingFormGroup">
+          <ng-template matStepLabel >Billing & Address</ng-template>
+          
+          <div class="billing-content" *ngIf="cartItems.length > 0">
+            <h5 class="section-title">Select Delivery Address</h5>
+            
+            <div class="address-grid">
+              <mat-card *ngFor="let address of addresses; let i = index"
+                        [class.selected]="selectedAddress === address.id"
+                        (click)="selectAddress(address.id)"
+                        [style.animation-delay]="i * 0.1 + 's'">
+                <mat-card-content>
+                  <h6 class="address-name">{{ address.name }}</h6>
+                  <p class="address-details">{{ address.street }}, {{ address.city }} - {{ address.zip }}</p>
+                  <div class="address-phone me-2">
+                    <mat-icon>phone</mat-icon>
+                    <span>{{ address.userPhone }}</span>
+                  </div>
+                  <button mat-button color="primary" class="deliver-btn">Deliver</button>
+                </mat-card-content>
+              </mat-card>
+            </div>
+
+
+
+            
+            <div class="delivery-payment-section">
+              <!-- Delivery Options -->
+              <div class="options-card">
+                <h3 class="options-title">Options de Livraison</h3>
+                <mat-radio-group formControlName="deliveryOption" class="options-group">
+                  <mat-radio-button value="standard" class="option-item">
+                    <div class="option-content">
+                      <div class="option-text">
+                        <h4 class="option-name">Livraison Standard - Kenitra</h4>
+                        <p class="option-description">Délai : 2 à 3 jours ouvrables</p>
+                      </div>
+                      <div class="option-price">0 MAD</div>
+                    </div>
+                  </mat-radio-button>
+
+                  <mat-radio-button value="express" class="option-item">
+                    <div class="option-content">
+                      <div class="option-text">
+                        <h4 class="option-name">Livraison Express - Kenitra</h4>
+                        <p class="option-description">Délai : 24 heures</p>
+                      </div>
+                      <div class="option-price">30 MAD</div>
+                    </div>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+
+              <!-- Payment Options -->
+              <div class="options-card">
+                  <h3 class="options-title">Payment Options</h3>
+                  <mat-radio-group  class="options-group">
+                 
+                  <mat-radio-button value="cod" class="option-item">
+                    <div class="option-content">
+                      <div class="option-text">
+                        <h4 class="option-name">Paiement à la livraison</h4>
+                        <p class="option-description">Payer en espèces à la réception du colis.</p>
+                      </div>
+                      <mat-icon class="option-icon">local_atm</mat-icon>
+                    </div>
+                  </mat-radio-button>
+
+                  </mat-radio-group>
+              </div>
+            </div>
+
+            <!-- Section du code promo -->
+            <div class="coupon-section">
+              <mat-form-field appearance="outline" class="coupon-input">
+                <mat-label>Code promo</mat-label>
+                <input matInput formControlName="couponCode" placeholder="Ex: PROMO2025">
+              </mat-form-field>
+              <button mat-stroked-button  color="accent" (click)="applyCoupon()">Appliquer</button>
+            </div>
+
+            <!-- Affichage dans le résumé -->
+            <div class="summary-row" *ngIf="appliedCoupon">
+              <span>Code Promo :</span>
+              <span class="text-success">{{ appliedCoupon.code }}</span>
+            </div>
+            <div class="summary-row" *ngIf="appliedCoupon">
+              <span>Remise :</span>
+              <span class="text-danger">-{{ discount | currency }}</span>
+            </div>
+
+
+            
+            <!-- Résumé commande -->
+            <div class="order-summary">
+              <h5 class="summary-title">Order Summary</h5>
+
+              <div class="summary-row">
+                <span>Sub Total</span>
+                <span>{{ subTotal | number:'1.2-2' }} MAD</span>
+              </div>
+
+              <div class="summary-row" *ngIf="discount > 0">
+                <span>Discount</span>
+                <span class="text-danger">-{{ discount | number:'1.2-2' }} MAD</span>
+              </div>
+
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span *ngIf="deliveryOption === 'express'">30.00 MAD</span>
+                <span *ngIf="deliveryOption !== 'express'">Free</span>
+              </div>
+
+              <div class="summary-row total">
+                <span>Total panier :</span>
+                <span>{{ getTotal() | number:'1.2-2' }} MAD</span>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- Stepper Final Actions -->
+          <div class="stepper-actions place-order-actions" *ngIf="cartItems.length > 0" >
+            <button mat-flat-button matStepperPrevious class="back-button">Back</button>
+            <button mat-flat-button color="accent" (click)="placeOrder()">
+              <mat-icon>shopping_cart_checkout</mat-icon>
+              <span>Valider la commande</span>
+            </button>
+          </div>
+
+        </form>
+      </mat-step>
+
+      <!-- Step 3: Payment Confirmation -->
+      <mat-step [completed]="paymentCompleted">
+        <ng-template matStepLabel>Payment</ng-template>
+        
+        <div class="payment-confirmation">
+          <h5 class="confirmation-title">Thank you for your purchase!</h5>
+          <h6 class="confirmation-id">Your order id: {{orderId}}</h6>
+          <img src="../assets2/images/products/payment-complete.svg" alt="Payment Complete" class="confirmation-image">
+          <p class="confirmation-message">
+            We will send you a notification<br>
+            within 2 days when it ships.
+          </p>
+          
+          <div class="confirmation-actions">
+            <button mat-flat-button color="primary" (click)="goToShop()" class="action-button btn-primary">
+              Continue Shopping
+            </button>
+            <button   (click)="downloadReceipt()" class="action-button btn-danger">
+              Download Receipt
+            </button>
+          </div>
+        </div>
+
+        <div class="stepper-actions">
+          <button mat-flat-button matStepperPrevious class="back-button">Back</button>
+          <button mat-flat-button color="primary" (click)="completeCheckout()">Complete Order</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+</div>
+
+<app-footer></app-footer>
