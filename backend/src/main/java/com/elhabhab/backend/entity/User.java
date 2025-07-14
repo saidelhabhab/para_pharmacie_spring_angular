@@ -23,8 +23,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, updatable = false)
-    private UUID userId ;
+    @Column(nullable = false, unique = true, updatable = false, columnDefinition = "BINARY(16)")
+    private UUID userId;
 
     @Column(unique = true)
     @Email(message = "Email should be valid")

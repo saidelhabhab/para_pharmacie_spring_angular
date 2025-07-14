@@ -13,11 +13,15 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
     public static final String POST = "POST";
+    public static final String OPTIONS = "OPTIONS";
+    public static final String PATCH = "PATCH";
+
+
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods(GET,PUT,DELETE,POST)
+                .allowedMethods(GET,PUT,DELETE,POST,OPTIONS, PATCH)
                 .allowedHeaders("*")
                 .allowedOriginPatterns("/*")
                 .allowedOrigins("http://localhost:4200")

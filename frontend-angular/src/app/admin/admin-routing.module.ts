@@ -10,6 +10,8 @@ import { AddProductComponent } from './components/product/add-product/add-produc
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingComponent } from './components/setting/setting.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { CategoriesComponent } from './components/category/categories/categories.component';
 
 const routes: Routes = [
   {
@@ -18,14 +20,18 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'users', component: UsersComponent },
-      { path: 'add-user', component:  AddUserComponent},
-      { path: 'edit-user', component: EditUserComponent },
+      { path: 'customers', component: UsersComponent },
+      { path: 'add-customer', component:  AddUserComponent},
+      { path: 'edit-customer', component: EditUserComponent },
       { path: 'products', component:  ProductsComponent},
       { path: 'add-product', component:  AddProductComponent},
       { path: 'edit-product/:id', component: EditProductComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'setting', component: SettingComponent }
+      { path: 'setting', component: SettingComponent },
+      { path: 'orders', component: OrdersComponent },
+      { path: 'products/categories', component: CategoriesComponent }
+
+
 
 
     ]

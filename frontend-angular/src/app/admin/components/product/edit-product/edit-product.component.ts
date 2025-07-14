@@ -3,6 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Editor, Toolbar } from 'ngx-editor';
 import { ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProgressDialogComponent } from 'src/app/pages/layout/progress-dialog/progress-dialog.component';
+import Swal from 'sweetalert2';
+import { CategoryService } from 'src/app/services/category.service';
 
 
 @Component({
@@ -36,6 +40,8 @@ export class EditProductComponent implements OnInit, OnDestroy {
   galleryImageUrls: string[] = []; // pour images existantes
   removedGalleryImages: string[] = []; // ← stocker les images supprimées
   newGalleryImages: { file: File, preview: string }[] = []; // Nouvelles images locales avec preview
+    
+  subcategories: any[] = []; // Liste dynamique des sous-catégories
 
 
   readonly backendUrl = 'http://localhost:8200'; 
@@ -52,15 +58,26 @@ export class EditProductComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    public  dialog: MatDialog,
+    public categoryService: CategoryService,
+    
   ) {}
 
   ngOnInit(): void {
     this.editor = new Editor();
     this.productId = this.route.snapshot.paramMap.get('id') || '';
+    
     this.initForm();
     this.loadProduct();
+
+    // 👇 Charger dynamiquement les sous-catégories quand la catégorie change
+    this.form.get('category')?.valueChanges.subscribe((value) => {
+      this.loadSubcategories(value);
+      this.form.patchValue({ selectedCategories: [] }); // Réinitialise les sous-catégories sélectionnées
+    });
   }
+
 
   ngOnDestroy(): void {
     this.editor.destroy();
@@ -79,7 +96,11 @@ export class EditProductComponent implements OnInit, OnDestroy {
       taxClass: [''],
       category: ['', Validators.required],
       imageFile: [null],
-      photoFiles: [null]
+      photoFiles: [null],
+      barcode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(13)]],
+      selectedCategories: [[]], // ✅ pour gérer les sous-catégories
+
+
     });
 
     this.form.get('price')?.valueChanges.subscribe(() => this.calculateDiscount());
@@ -90,7 +111,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
     this.productService.getProductById(this.productId).subscribe({
       next: (product) => {
         this.previewImageUrl = product.imageUrl; // Assigne directement l'URL de l'image
-      this.galleryImageUrls = product.photoUrls || []; // ← Assurez-vous que la clé existe
+        this.galleryImageUrls = product.photoUrls || []; // ← Assurez-vous que la clé existe
 
         this.form.patchValue({
           name: product.name,
@@ -102,8 +123,14 @@ export class EditProductComponent implements OnInit, OnDestroy {
           quantity: product.quantity,
           brand: product.brand,
           taxClass: product.taxClass,
-          category: product.category
-        });
+          category: product.category,
+          barcode: product.barcode,
+           selectedCategories: product.subCategories.map((sub: any) => sub.id) // ✅ important
+      });
+
+      // Charger dynamiquement les sous-catégories
+      this.loadSubcategories(product.category);
+
       },
       error: (err) => {
         console.error('❌ Failed to load product', err);
@@ -111,6 +138,17 @@ export class EditProductComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+    loadSubcategories(category: string): void {
+      this.categoryService.getByProductCategory(category).subscribe({
+        next: (res) => {
+          this.subcategories = res;
+        },
+        error: (err) => {
+          console.error('❌ Échec du chargement des sous-catégories', err);
+        }
+      });
+    }
 
 
     getFullImagePath(imagePath: string): string {
@@ -175,45 +213,107 @@ export class EditProductComponent implements OnInit, OnDestroy {
  
   
   
- submit(): void {
-  if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
-  }
+  submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Formulaire invalide',
+        text: 'Veuillez remplir tous les champs requis correctement.',
+      });
+      return;
+    }
 
-  const formData = new FormData();
-  const formValue = this.form.getRawValue();
+    const formData = new FormData();
+    const formValue = this.form.getRawValue();
 
-  if (this.removedGalleryImages.length > 0) {
-    this.removedGalleryImages.forEach(path => {
-      formData.append('removedGalleryImages', path);
+    // Vérification du code-barres
+    if (!formValue.barcode || formValue.barcode.trim().length < 6) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Code-barres invalide',
+        text: 'Le code-barres doit contenir au moins 6 caractères.',
+      });
+      return;
+    }
+
+    // Vérification de la quantité
+    if (formValue.quantity <= 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Quantité invalide',
+        text: 'La quantité doit être supérieure à 0.',
+      });
+      return;
+    }
+
+    // Supprime les images marquées pour suppression
+    if (this.removedGalleryImages.length > 0) {
+      this.removedGalleryImages.forEach(path => {
+        formData.append('removedGalleryImages', path);
+      });
+    }
+
+    // Ajoute les champs du formulaire au formData
+    for (const key in formValue) {
+      if (key === 'photoFiles' && this.newGalleryImages.length > 0) {
+        this.newGalleryImages.forEach(image => formData.append('photoFiles', image.file));
+      } else if (key === 'selectedCategories') {
+        formValue[key].forEach((id: number) => {
+          formData.append('subCategoryIds', id.toString()); // ✅ un par un
+        });
+      } else if (formValue[key] !== null && formValue[key] !== undefined) {
+        formData.append(key, formValue[key]);
+      }
+    }
+
+
+    // Ajoute l'image principale si modifiée
+    if (this.imageFile) {
+      formData.append('imageFile', this.imageFile);
+    }
+
+    // 🔄 Confirmation utilisateur
+    Swal.fire({
+      title: 'Confirmer la modification ?',
+      text: 'Souhaitez-vous vraiment enregistrer les modifications ?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Oui, mettre à jour',
+      cancelButtonText: 'Annuler',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Mise à jour en cours...',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        this.productService.updateProduct(this.productId, formData).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Produit mis à jour avec succès',
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              this.router.navigate(['/admin/products']);
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur de mise à jour',
+              text: 'Impossible de modifier le produit. Veuillez réessayer.',
+            });
+            console.error('❌ Erreur de mise à jour du produit', err);
+          }
+        });
+      }
     });
   }
-
-  for (const key in formValue) {
-    if (key === 'photoFiles' && this.newGalleryImages.length > 0) {
-      this.newGalleryImages.forEach(image => formData.append('photoFiles', image.file));
-    } else if (formValue[key] !== null && formValue[key] !== undefined) {
-      formData.append(key, formValue[key]);
-    }
-  }
-
-  if (this.imageFile) {
-    formData.append('imageFile', this.imageFile);
-  }
-
-  this.productService.updateProduct(this.productId, formData).subscribe({
-    next: () => {
-      console.log('✅ Product updated successfully');
-      this.router.navigate(['/admin/products']);
-    },
-    error: (err) => {
-      console.error('❌ Error updating product', err);
-    }
-  });
-}
-
-
 
 
   cancel(): void {

@@ -81,7 +81,7 @@ export class ProductDetailComponent implements OnInit {
 
 
     addToCart(product: ProductResponseDTO): void {
-      const userId = 1; // à remplacer avec AuthService
+      const userId =  '49d2554d-61a3-4bc9-b6ee-26046ab29254'; // à remplacer avec AuthService
 
       const quantitySelected = this.quantityForm.get('quantity')?.value;
 

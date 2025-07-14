@@ -1,40 +1,126 @@
 import { NavItem } from "./nav-item/nav-item";
 
 
-export const navItems: NavItem[] = [
+export const navItems : NavItem[] = [
+  // ========== DASHBOARD SECTION ==========
   {
     navCap: 'Home',
   },
   {
     displayName: 'Dashboard',
-    iconName: 'solar:widget-add-line-duotone',
+    iconName: 'solar:pie-chart-2-line-duotone',
     route: '/admin/dashboard',
+    badgeContent: 'New', // Optional badge
   },
 
+  // ========== INVENTORY MANAGEMENT ==========
   {
     divider: true,
-    navCap: 'Apps',
+    navCap: 'Inventory',
   },
-
-  {
-    displayName: 'Users',
-    iconName: 'solar:users-group-two-rounded-line-duotone' ,
-    route: '/admin/users',
-
-  },
-
   {
     displayName: 'Products',
-    iconName: 'mdi:package-variant',  
+    iconName: 'solar:medicine-bottle-line-duotone',
     route: '/admin/products',
+    children: [
+      {
+        displayName: 'All Products',
+        route: '/admin/products',
+      },
+      {
+        displayName: 'Categories',
+        route: '/admin/products/categories',
+      },
+      {
+        displayName: 'Low Stock',
+        route: '/admin/products/low-stock',
+        badgeContent: '5', 
+      },
+    ],
+  },
+  {
+    displayName: 'Inventory',
+    iconName: 'solar:box-minimalistic-line-duotone',
+    route: '/admin/inventory',
+  },
+ // {
+ //   displayName: 'Suppliers',
+ //   iconName: 'solar:truck-line-duotone',
+  //  route: '/admin/suppliers',
+ // },
 
+  // ========== SALES & ORDERS ==========
+  {
+    divider: true,
+    navCap: 'Sales',
+  },
+  {
+    displayName: 'Orders',
+    iconName: 'solar:cart-large-3-line-duotone',
+    route: '/admin/orders',
+    badgeContent: '12', // New orders count
+  },
+  {
+    displayName: 'Prescriptions',
+    iconName: 'solar:document-text-line-duotone',
+    route: '/admin/prescriptions',
+  },
+  {
+    displayName: 'Customers',
+    iconName: 'solar:user-id-line-duotone',
+    route: '/admin/customers',
   },
 
-   {
-    displayName: 'Setting',
-    iconName: 'mdi:cog',  
-    route: '/admin/setting',
+  // ========== PHARMACY OPERATIONS ==========
+  {
+    divider: true,
+    navCap: 'Pharmacy',
+  },
+  {
+    displayName: 'Expiry Alerts',
+    iconName: 'solar:clock-circle-line-duotone',
+    route: '/admin/expiry-alerts',
+    badgeContent: '3', // Expiring soon items
+  },
+  {
+    displayName: 'Drug Interactions',
+    iconName: 'solar:warning-circle-line-duotone',
+    route: '/admin/drug-interactions',
+  },
 
+  // ========== ADMINISTRATION ==========
+  {
+    divider: true,
+    navCap: 'Administration',
+  },
+  {
+    displayName: 'Users & Roles',
+    iconName: 'solar:users-group-two-rounded-line-duotone',
+    route: '/admin/users',
+  },
+  {
+    displayName: 'Reports',
+    iconName: 'solar:chart-line-duotone',
+    route: '/admin/reports',
+  },
+  {
+    displayName: 'Settings',
+    iconName: 'solar:settings-line-duotone',
+    route: '/admin/settings',
+    children: [
+      {
+        displayName: 'General',
+        route: '/admin/settings/general',
+      },
+      {
+        displayName: 'Pharmacy Info',
+        route: '/admin/settings/pharmacy',
+      },
+      {
+        displayName: 'Notifications',
+        route: '/admin/settings/notifications',
+      },
+    ],
   },
  
   {

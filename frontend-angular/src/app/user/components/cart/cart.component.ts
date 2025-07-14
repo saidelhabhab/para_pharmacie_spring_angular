@@ -16,7 +16,7 @@ export class CartComponent implements OnInit {
 
   cartItems: CartItemResponseDTO[] = [];
   cartId!: number;
-  userId: number = 1; // à remplacer par un vrai userId (auth service par exemple)
+  userId: string = '49d2554d-61a3-4bc9-b6ee-26046ab29254'; // à remplacer par un vrai userId (auth service par exemple)
 
 allProducts: { productId: string; imageUrl: string | null }[] = [];
 

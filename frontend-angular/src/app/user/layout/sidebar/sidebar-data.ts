@@ -2,39 +2,77 @@ import { NavItem } from "./nav-item/nav-item";
 
 
 export const navItems: NavItem[] = [
+  // ========== HOME SECTION ==========
   {
     navCap: 'Home',
   },
   {
     displayName: 'Dashboard',
-    iconName: 'solar:widget-add-line-duotone',
-    route: '/admin/dashboard',
+    iconName: 'solar:pie-chart-2-line-duotone', // Better for analytics
+    route: '/user/dashboard',
   },
 
+  // ========== MANAGEMENT SECTION ==========
   {
     divider: true,
-    navCap: 'Apps',
+    navCap: 'Management',
   },
-
   {
-    displayName: 'Users',
-    iconName: 'solar:users-group-two-rounded-line-duotone' ,
-    route: '/admin/users',
-
+    displayName: 'Customers',
+    iconName: 'solar:user-id-line-duotone', // Specific to customers
+    route: '/user/customers',
   },
-
+  {
+    displayName: 'Orders',
+    iconName: 'solar:cart-large-3-line-duotone', // Modern shopping cart
+    route: '/user/orders',
+  },
   {
     displayName: 'Products',
-    iconName: 'mdi:package-variant',  
-    route: '/admin/products',
-
+    iconName: 'solar:medicine-bottle-line-duotone', // Pharmacy-specific
+    route: '/user/products',
+  },
+  {
+    displayName: 'Inventory',
+    iconName: 'solar:box-minimalistic-line-duotone', // Stock management
+    route: '/user/inventory',
   },
 
-   {
-    displayName: 'Setting',
-    iconName: 'mdi:cog',  
-    route: '/admin/setting',
+  // ========== PHARMACY-SPECIFIC ==========
+  {
+    divider: true,
+    navCap: 'Pharmacy',
+  },
+  {
+    displayName: 'Prescriptions',
+    iconName: 'solar:document-text-line-duotone', // For Rx management
+    route: '/user/prescriptions',
+  },
+  {
+    displayName: 'Suppliers',
+    iconName: 'solar:truck-line-duotone', // For vendors
+    route: '/user/suppliers',
+  },
 
+  // ========== SYSTEM SECTION ==========
+  {
+    divider: true,
+    navCap: 'System',
+  },
+  {
+    displayName: 'Users & Roles',
+    iconName: 'solar:users-group-two-rounded-line-duotone',
+    route: '/user/access-control',
+  },
+  {
+    displayName: 'Settings',
+    iconName: 'solar:settings-line-duotone', // Modern settings icon
+    route: '/user/settings',
+  },
+  {
+    displayName: 'Reports',
+    iconName: 'solar:chart-line-duotone', // For analytics
+    route: '/user/reports',
   },
  
   {

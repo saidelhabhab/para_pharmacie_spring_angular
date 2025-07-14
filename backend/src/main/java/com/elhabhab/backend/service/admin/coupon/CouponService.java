@@ -19,5 +19,5 @@ public interface CouponService {
 
     Page<CouponResponseDTO> getCouponsPage(Pageable pageable);
 
-    CouponResponseDTO applyCouponToCart(String code, Long userId);
+    CouponResponseDTO applyCouponToCart(String code, UUID userId);
 }

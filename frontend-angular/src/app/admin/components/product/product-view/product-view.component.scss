@@ -1,0 +1,203 @@
+.dialog-content {
+  .product-preview {
+    display: flex;
+    gap: 30px;
+    animation: fadeIn 0.6s ease-in;
+
+    .left-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+
+     
+
+      .image-container {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        &.floating {
+          animation: float 3s ease-in-out infinite;
+        }
+
+        .discount-badge {
+          position: absolute;
+          top: 8px;
+          left: 8px;
+          background-color: #e53935;
+          color: white;
+          padding: 5px 10px;
+          border-radius: 4px;
+          font-size: 13px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .info {
+      flex: 1;
+
+       .barcode {
+        border: 1px dashed #ccc;
+        padding: 10px;
+        background: #f9f9f9;
+        border-radius: 4px;
+        transition: transform 0.3s ease;
+        max-width: 220px;
+        margin: 2px;
+      }
+
+      .barcode:hover {
+        transform: scale(1.02);
+      }
+
+      .info-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+
+        span.iconify {
+          font-size: 20px;
+          color: #3f51b5;
+        }
+
+        p {
+          margin: 0;
+          font-size: 15px;
+        }
+      }
+
+      .price-section {
+        .current-price {
+          font-weight: bold;
+          color: #4caf50;
+          font-size: 16px;
+        }
+
+        .old-price {
+          text-decoration: line-through;
+          color: #9e9e9e;
+          margin-left: 8px;
+        }
+      }
+
+      .status {
+        font-weight: bold;
+
+        &.in-stock {
+          color: #4caf50;
+        }
+
+        &.out-of-stock {
+          color: #f44336;
+        }
+      }
+
+     
+    }
+
+    
+  }
+  .description-section {
+        margin-top: 20px;
+
+        h3 {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+    }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .icon-wrapper {
+    font-size: 24px;
+    color: #3f51b5;
+  }
+}
+
+
+
+.close-btn {
+  // Remove default outline button styles
+  border: none !important;
+  background-color: #4361ee !important; // Primary blue color
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 8px 24px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+
+  // Icon styles
+  .iconify {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+
+  // Hover effects
+  &:hover {
+    background-color: darken(#4361ee, 8%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3) !important;
+
+    .iconify {
+      transform: scale(1.1);
+    }
+  }
+
+  // Active/pressed effect
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2) !important;
+  }
+
+  // Focus state
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3) !important;
+  }
+}
+
+
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

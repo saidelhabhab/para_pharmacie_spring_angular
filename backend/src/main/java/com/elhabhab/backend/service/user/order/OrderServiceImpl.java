@@ -12,6 +12,10 @@ import com.elhabhab.backend.service.user.cart.CartService;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -33,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final CouponRepository couponRepository;
     private final UserAddressRepository userAddressRepository;
+    private final InvoiceRepository invoiceRepository;
 
     private final OrderMapper orderMapper;
 
@@ -134,8 +139,22 @@ public class OrderServiceImpl implements OrderService {
 
         Order savedOrder = orderRepository.save(order);
 
+        // ✅ Ajout automatique de la facture après enregistrement de la commande
+        Invoice invoice = Invoice.builder()
+                .invoiceId(UUID.randomUUID())
+                .order(savedOrder)
+                .invoiceDate(LocalDateTime.now())
+                .totalAmount(savedOrder.getTotalAmount())
+                .discountAmount(savedOrder.getDiscountAmount())
+                .paymentMethod(savedOrder.getPaymentMethod())
+                .deliveryOption(savedOrder.getDeliveryOption())
+                .invoiceStatus("PENDING") // ou "PAID" selon ta logique métier
+                .build();
+
+        invoiceRepository.save(invoice);
+
         // ✅ Supprimer tous les articles du panier de l'utilisateur
-        cartService.clearCart(user.getId());
+        cartService.clearCart(user.getUserId());
 
         // 🔔 Notification dans l'application
         notifyUserAboutOrder(user, savedOrder);
@@ -156,8 +175,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResponseDTO> getOrdersByUserId(UUID userId) {
-        List<Order> orders = orderRepository.findByUserUserId(userId);
+        List<Order> orders = orderRepository.findByUser_UserId(userId);
         return orders.stream().map(orderMapper::toDto).toList();
+    }
+
+
+    @Override
+    public Page<OrderResponseDTO> getOrdersByUserIdPaginated(UUID userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("orderDate").descending());
+        Page<Order> orderPage = orderRepository.findByUser_UserId(userId, pageable);
+        return orderPage.map(orderMapper::toDto);
+    }
+
+    @Override
+    public Page<OrderResponseDTO> getAllOrdersPaginated(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("orderDate").descending());
+        return orderRepository.findAll(pageable)
+                .map(orderMapper::toDto);
     }
 
     @Override
@@ -167,6 +201,38 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.CANCELLED);
         orderRepository.save(order);
     }
+
+
+    @Override
+    public void updateOrderStatus(UUID orderId, OrderStatus newStatus) {
+        Order order = orderRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
+
+        order.setStatus(newStatus);
+        orderRepository.save(order);
+
+        // 🔁 Mettre à jour aussi la facture liée
+        invoiceRepository.findByOrder(order).ifPresent(invoice -> {
+            String invoiceStatus = mapOrderStatusToInvoiceStatus(newStatus);
+            invoice.setInvoiceStatus(invoiceStatus);
+            invoiceRepository.save(invoice);
+        });
+    }
+
+    private String mapOrderStatusToInvoiceStatus(OrderStatus status) {
+        return switch (status) {
+            case PENDING     -> "EN_ATTENTE";
+            case PROCESSING  -> "EN_COURS";
+            case SHIPPED     -> "EXPÉDIÉE";
+            case DELIVERED   -> "PAYÉE";
+            case CANCELLED   -> "ANNULÉE";
+            case RETURNED    -> "REMBOURSÉE";
+        };
+    }
+
+
+
+    ////////////////////////////////////////////
 
     private void notifyUserAboutOrder(User user, Order order) {
         String message = "📦 Votre commande #" + order.getOrderId() + " a été confirmée !\n" +
@@ -230,6 +296,8 @@ public class OrderServiceImpl implements OrderService {
             System.err.println("❌ Échec envoi email de confirmation à " + user.getEmail() + " : " + e.getMessage());
         }
     }
+
+
 
 
 }

@@ -1,0 +1,296 @@
+.custom-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  margin-bottom: 10px;
+  border: 0.5px solid #a0a1a180;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  animation: fadeIn 0.6s ease;
+}
+
+.breadcrumb-nav {
+  margin-left: auto;
+}
+
+.breadcrumb-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.breadcrumb-badge {
+  background-color: #e0f0ff;
+  color: #007bff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+// Orders Container
+.orders-container {
+  padding: 20px 0 0 0;
+
+  .custom-table {
+    width: 100%;
+    border-radius: 12px;
+    overflow-x: auto;
+    animation: fadeIn 0.8s ease-in;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background-color: #f4f6f8;
+      font-weight: 600;
+      color: #555;
+    }
+  }
+
+  .text-id {
+    font-family: monospace;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .status {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: capitalize;
+
+    &.pending {
+      color: #ffc107;
+    }
+    &.processing {
+      color: #17a2b8;
+    }
+    &.shipped {
+      color: #007bff;
+    }
+    &.delivered {
+      color: #28a745;
+    }
+    &.cancelled {
+      color: #dc3545;
+    }
+    &.returned {
+      color: #6c757d;
+    }
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .animate-row {
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #f5f5f5;
+      transform: scale(1.005);
+    }
+  }
+}
+
+.status-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.status-label {
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &.pending {
+    color: #ffc107;
+    background-color: #fff8e1;
+  }
+
+  &.processing {
+    color: #17a2b8;
+    background-color: #e0f7fa;
+  }
+
+  &.shipped {
+    color: #007bff;
+    background-color: #e3f2fd;
+  }
+
+  &.delivered {
+    color: #28a745;
+    background-color: #e8f5e9;
+  }
+
+  &.cancelled {
+    color: #dc3545;
+    background-color: #fdecea;
+  }
+
+  &.returned {
+    color: #6c757d;
+    background-color: #f5f5f5;
+  }
+}
+
+.status-select {
+  width: 160px;
+
+  .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+
+  .mat-form-field-flex {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: #1976d2;
+    }
+  }
+
+  .mat-select {
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+}
+
+
+
+// Search input and buttons
+.search-input {
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+
+  &:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+  }
+}
+
+.animate-hover {
+  transition: all 0.3s;
+  &:hover {
+    transform: scale(1.03);
+    background-color: #ffecec;
+  }
+}
+
+// Fade-in animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive tweaks
+@media (max-width: 767px) {
+  .custom-card {
+    padding: 1rem;
+  }
+
+  .header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .custom-table {
+    font-size: 0.85rem;
+  }
+
+  .status-select {
+    width: 100%;
+  }
+
+  .breadcrumb-list {
+    flex-wrap: wrap;
+  }
+}

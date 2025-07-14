@@ -97,9 +97,17 @@
       <mat-step  [stepControl]="billingFormGroup" [completed]="billingCompleted">
         <form [formGroup]="billingFormGroup">
           <ng-template matStepLabel >Billing & Address</ng-template>
-          
+         
           <div class="billing-content" *ngIf="cartItems.length > 0">
             <h5 class="section-title">Select Delivery Address</h5>
+          
+            <!-- No addresses? show a message + button -->
+            <div *ngIf="addresses.length === 0" class="no-address">
+              <p>Aucune adresse trouvée.</p>
+            <!--  <button mat-flat-button color="primary" (click)="openAddAddress()">
+                Ajouter une adresse
+              </button> -->
+            </div>
             
             <div class="address-grid">
               <mat-card *ngFor="let address of addresses; let i = index"
@@ -116,7 +124,20 @@
                   <button mat-button color="primary" class="deliver-btn">Deliver</button>
                 </mat-card-content>
               </mat-card>
+              <!-- Add Address button when addresses exist -->
+              <mat-card class="add-new-address" (click)="openAddAddress()">
+                <mat-card-content>
+                  <mat-icon>add</mat-icon>
+                  <h6>Ajouter une nouvelle adresse</h6>
+                </mat-card-content>
+              </mat-card>
             </div>
+
+           
+              <!-- show error if no address chosen -->
+            <mat-error *ngIf="billingFormGroup.get('addressId')?.hasError('required')">
+              Veuillez sélectionner une adresse de livraison.
+            </mat-error>
 
 
 
@@ -220,7 +241,7 @@
           <!-- Stepper Final Actions -->
           <div class="stepper-actions place-order-actions" *ngIf="cartItems.length > 0" >
             <button mat-flat-button matStepperPrevious class="back-button">Back</button>
-            <button mat-flat-button color="accent" (click)="placeOrder()">
+            <button mat-flat-button color="accent" (click)="placeOrder()" [disabled]="!billingFormGroup.valid">
               <mat-icon>shopping_cart_checkout</mat-icon>
               <span>Valider la commande</span>
             </button>

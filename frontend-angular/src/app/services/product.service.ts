@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductResponseDTO } from '../interface/product-response-dto';
+import { ProductRequestDTO } from '../interface/product-request-dto';
 
 
 @Injectable({
@@ -41,5 +42,9 @@ export class ProductService {
   // ✅ DELETE: delete product
   deleteProduct(productId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${productId}`);
+  }
+
+  updateProductDiscount(productId: string, data: Partial<ProductRequestDTO>): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/products/${productId}/discount`, data);
   }
 }

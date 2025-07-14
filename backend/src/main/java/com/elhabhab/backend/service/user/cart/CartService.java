@@ -6,10 +6,10 @@ import com.elhabhab.backend.dto.response.CartResponseDTO;
 import java.util.UUID;
 
 public interface CartService {
-    CartResponseDTO addToCart(Long userId, CartItemRequestDTO dto);
-    CartResponseDTO getCart(Long userId);
-    void removeItem(Long userId, UUID productId);
-    CartResponseDTO updateItemQuantity(Long userId, CartItemRequestDTO dto) ;
-    void clearCart(Long userId);
+    CartResponseDTO addToCart(UUID userId, CartItemRequestDTO dto);
+    CartResponseDTO getCart(UUID userId);
+    void removeItem(UUID userId, UUID productId);
+    CartResponseDTO updateItemQuantity(UUID userId, CartItemRequestDTO dto) ;
+    void clearCart(UUID userId);
     }
 

@@ -24,4 +24,7 @@ public interface ProductService {
     List<ProductResponseDTO> getAllProducts();
 
     Page<ProductResponseDTO> getProductsPage(Pageable pageable);
+
+    ProductResponseDTO updateProductDiscount(UUID productId, ProductRequestDTO dto);
+
 }

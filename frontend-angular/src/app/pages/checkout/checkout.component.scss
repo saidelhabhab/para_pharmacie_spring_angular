@@ -828,6 +828,34 @@ $border-radius: 12px;
       }
     }
   }
+
+  .add-new-address {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px dashed rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: #3f51b5;
+      background: rgba(63, 81, 181, 0.04);
+    }
+    
+    mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
+      color: #3f51b5;
+    }
+    
+    h6 {
+      margin: 0;
+      color: #3f51b5;
+    }
+  }
+
 }
 
 

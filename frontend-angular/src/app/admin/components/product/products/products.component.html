@@ -114,19 +114,28 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="addProduct()">
-                    <mat-icon>add</mat-icon>
-                    <span>Add</span>
+                  <button mat-menu-item (click)="openProductDialog(element)">
+                    <mat-icon>visibility</mat-icon>
+                    <span>View</span>
                   </button>
                   <button mat-menu-item [routerLink]="['/admin/edit-product', element.productId]">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="applyDiscount(element)">
+                    <mat-icon>percent</mat-icon>
+                    <span>Apply Discount</span>
+                  </button>
+                  <button mat-menu-item (click)="removeDiscount(element)">
+                    <mat-icon>restore</mat-icon>
+                    <span>Remove Discount</span>
                   </button>
                   <button mat-menu-item (click)="deleteItem()">
                     <mat-icon>delete</mat-icon>
                     <span>Delete</span>
                   </button>
                 </mat-menu>
+
               </td>
             </ng-container>
 

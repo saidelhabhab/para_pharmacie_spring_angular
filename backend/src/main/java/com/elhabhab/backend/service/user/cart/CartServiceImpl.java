@@ -26,13 +26,13 @@ public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
 
     @Override
-    public CartResponseDTO addToCart(Long userId, CartItemRequestDTO dto) {
+    public CartResponseDTO addToCart(UUID userId, CartItemRequestDTO dto) {
         Product product = productRepository.findByProductId(dto.getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        Cart cart = cartRepository.findByUserId(userId).orElseGet(() -> {
+        Cart cart = cartRepository.findByUser_UserId(userId).orElseGet(() -> {
             Cart newCart = new Cart();
             newCart.setUser(user);
             return cartRepository.save(newCart);
@@ -64,8 +64,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponseDTO getCart(Long userId) {
-        Cart cart = cartRepository.findByUserId(userId)
+    public CartResponseDTO getCart(UUID userId) {
+        Cart cart = cartRepository.findByUser_UserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
         return CartResponseDTO.builder()
@@ -76,8 +76,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeItem(Long userId, UUID productId) {
-        Cart cart = cartRepository.findByUserId(userId)
+    public void removeItem(UUID userId, UUID productId) {
+        Cart cart = cartRepository.findByUser_UserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
         cart.getItems().removeIf(item -> item.getProduct().getProductId().equals(productId));
@@ -85,8 +85,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponseDTO updateItemQuantity(Long userId, CartItemRequestDTO dto) {
-        Cart cart = cartRepository.findByUserId(userId)
+    public CartResponseDTO updateItemQuantity(UUID userId, CartItemRequestDTO dto) {
+        Cart cart = cartRepository.findByUser_UserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
         CartItem item = cart.getItems().stream()
@@ -112,8 +112,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void clearCart(Long userId) {
-        Cart cart = cartRepository.findByUserId(userId)
+    public void clearCart(UUID userId) {
+        Cart cart = cartRepository.findByUser_UserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
         cart.getItems().clear(); // Vide la liste des produits du panier

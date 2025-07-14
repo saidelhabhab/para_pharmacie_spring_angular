@@ -1,0 +1,47 @@
+.animated-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.6s ease;
+  transition: all 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.form-group-icon {
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: 38px;
+    left: 10px;
+    font-size: 20px;
+    color: #888;
+    z-index: 2;
+  }
+
+  .with-icon {
+    padding-left: 2.2rem !important;
+  }
+
+  .form-select.with-icon {
+    padding-left: 2.2rem !important;
+  }
+}
+
+.animate-hover {
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.03);
+  }
+}

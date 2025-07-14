@@ -1,0 +1,48 @@
+<div class="order-details-card animate-fade-in">
+  <div class="order-header">
+    <h5>
+      <span class="iconify" data-icon="mdi:clipboard-text-outline"></span>
+      Order ID: {{ order.orderId }}
+    </h5>
+    <p>
+      <span class="iconify" data-icon="mdi:calendar"></span>
+       {{ formatOrderDate(order.orderDate) | date:'medium' }}
+    </p>
+    <p>
+      <span class="iconify" data-icon="mdi:cash"></span>
+      Total: <strong>{{ order.totalAmount }} MAD</strong>
+    </p>
+    <p>
+      <span class="iconify" data-icon="mdi:flag-outline"></span>
+      Status: <strong>{{ order.status }}</strong>
+    </p>
+  </div>
+
+  <div class="product-list">
+    <div *ngFor="let item of order.items" class="product-item">
+      <img
+        class="product-image"
+        [src]="getProductImage(item.productId)"
+        alt="{{ item.productName }}"
+      />
+      <div class="product-info">
+        <h6>
+          <span class="iconify" data-icon="mdi:package-variant"></span>
+          {{ item.productName }}
+        </h6>
+        <p>
+          <span class="iconify" data-icon="mdi:cart-outline"></span>
+          Quantity: {{ item.quantity }}
+        </p>
+        <p>
+          <span class="iconify" data-icon="mdi:currency-usd"></span>
+          Unit Price: {{ item.unitPrice }} MAD
+        </p>
+        <p>
+          <span class="iconify" data-icon="mdi:calculator"></span>
+          Total: {{ item.totalPrice }} MAD
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

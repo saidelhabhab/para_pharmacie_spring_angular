@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Data
@@ -20,8 +18,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(nullable = false, unique = true, updatable = false, columnDefinition = "BINARY(16)")
     private UUID productId;
+
+    @Column(unique = true)
+    private String barcode;
+
 
     @Column(nullable = false)
     private String name;
@@ -59,6 +61,16 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductPhoto> photos = new ArrayList<>();
+
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_subcategories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "subcategory_id")
+    )
+    private List<SubCategory> subCategories = new ArrayList<>();
 
 }
 

@@ -4,6 +4,10 @@ import { Editor, Toolbar } from 'ngx-editor';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProgressDialogComponent } from 'src/app/pages/layout/progress-dialog/progress-dialog.component';
+import Swal from 'sweetalert2';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-add-product',
@@ -35,16 +39,33 @@ export class AddProductComponent implements OnInit, OnDestroy {
     'SKINCARE', 'HAIRCARE', 'SUPPLEMENT', 'DEVICE',
     'BABY_PRODUCT', 'HYGIENE', 'ACCESSORY'
   ];
+  selectedCategory: string = '';
+  subcategories: any[] = []; // à remplir dynamiquement depuis l’API
+
+
 
   taxClass = ['NONE', 'TVA_7', 'TVA_10', 'TVA_20'];
 
   imageFile!: File;
   photoFiles: File[] = [];
 
+  previewImageUrl: string | null = null;
+  newPreviewImageUrl: string | null = null;   // Nouvelle image sélectionnée (temporaire)
+  
+  galleryImageUrls: string[] = []; // pour images existantes
+  removedGalleryImages: string[] = []; // ← stocker les images supprimées
+  galleryPreviewUrls: string[] = [];
+
+  readonly backendUrl = 'http://localhost:8200'; 
+
+
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
+    private categoryService: CategoryService
+    
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +84,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
       selectedTags: [[]],
       selectedCategories: [[]],
       imageFile: [null],
-      photoFiles: [null]
+      photoFiles: [null],
+      barcode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(13)]],
     });
 
     // Automatic discount calculation when oldPrice or price changes
@@ -74,6 +96,58 @@ export class AddProductComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
+
+  onCategoryChange(): void {
+  const selectedCategory = this.form.get('category')?.value;
+  if (selectedCategory) {
+    this.categoryService.getByProductCategory(selectedCategory).subscribe((res) => {
+      this.subcategories = res;
+      this.form.patchValue({ selectedCategories: [] }); // Reset subcategories
+    });
+  }
+}
+
+   onImageFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      this.imageFile = input.files[0];
+
+      // 🔁 Créer une URL de prévisualisation
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewImageUrl = e.target.result;
+      };
+      reader.readAsDataURL(this.imageFile);
+    }
+  }
+
+  
+
+  onPhotoFilesChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      Array.from(input.files).forEach(file => {
+        this.photoFiles.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.galleryPreviewUrls.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Pour permettre de re-sélectionner les mêmes fichiers
+      input.value = '';
+    }
+  }
+
+  removeGalleryImage(index: number): void {
+    this.photoFiles.splice(index, 1);
+    this.galleryPreviewUrls.splice(index, 1);
+  }
+
 
   calculateDiscount(): void {
     const price = this.form.get('price')?.value;
@@ -86,59 +160,128 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  onImageFileChange(event: any): void {
-    const file = event.target.files?.[0];
-    if (file) {
-      this.imageFile = file;
-      this.form.patchValue({ imageFile: file });
-    }
-  }
+  
 
-  onPhotoFilesChange(event: any): void {
-    const files = event.target.files;
-    if (files.length > 0) {
-      this.photoFiles = Array.from(files);
-      this.form.patchValue({ photoFiles: this.photoFiles });
-    }
-  }
 
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Formulaire invalide',
+        text: 'Veuillez remplir tous les champs requis correctement.',
+      });
       return;
     }
 
-    const formData = new FormData();
     const formValue = this.form.value;
 
-    for (const key in formValue) {
-      if (key === 'photoFiles' && this.photoFiles.length > 0) {
-        this.photoFiles.forEach(file => formData.append('photoFiles', file));
-      } else if (key === 'selectedTags') {
-        formData.append('tags', JSON.stringify(formValue[key]));
-      } else if (key === 'selectedCategories') {
-        formData.append('categories', JSON.stringify(formValue[key]));
-      } else if (formValue[key] !== null && formValue[key] !== undefined) {
-        formData.append(key, formValue[key]);
-      }
+    // Vérifie que l'image principale est sélectionnée
+    if (!this.imageFile) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Image principale manquante',
+        text: 'Veuillez sélectionner une image principale du produit.',
+      });
+      return;
     }
 
-    if (this.imageFile) {
-      formData.append('imageFile', this.imageFile);
+     // Vérifie la quantité minimale
+    if (formValue.quantity <= 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Quantité invalide',
+        text: 'La quantité doit être supérieure à 0.',
+      });
+      return;
     }
 
-    this.productService.createProduct(formData).subscribe({
-      next: (res) => {
-        console.log('✅ Product added', res);
-        this.router.navigate(['/admin/products']);
-      },
-      error: (err) => {
-        console.error('❌ Error adding product', err);
+    // Vérifie si le champ "barcode" est vide
+    if (!formValue.barcode || formValue.barcode.trim().length < 6) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Code-barres invalide',
+        text: 'Le code-barres doit contenir au moins 6 caractères.',
+      });
+      return;
+    }
+
+    // Confirmation de l'utilisateur avant de soumettre
+    Swal.fire({
+      title: 'Confirmer l’ajout du produit ?',
+      text: 'Voulez-vous vraiment enregistrer ce produit ?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Oui, enregistrer',
+      cancelButtonText: 'Annuler',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const formData = new FormData();
+
+        for (const key in formValue) {
+          if (key === 'selectedTags') {
+            formData.append('tags', JSON.stringify(formValue[key]));
+          } else if (key === 'selectedCategories') {
+          //  formData.append('subCategoryIds', JSON.stringify(formValue[key])); par [7,8]
+
+            formValue[key].forEach((id: number) => {
+              formData.append('subCategoryIds', id.toString());  // ✅ un par un 7 and 8 
+            });
+          } else if (formValue[key] !== null && formValue[key] !== undefined) {
+            formData.append(key, formValue[key]);
+          }
+        }
+
+
+
+
+        formData.append('imageFile', this.imageFile);
+
+        Swal.fire({
+          title: 'Enregistrement en cours...',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+       console.log('🧾 Contenu du FormData :');
+      formData.forEach((value, key) => {
+         console.log(`${key}:`, value);
+       });
+
+
+      
+      this.productService.createProduct(formData).subscribe({
+          next: (res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Produit ajouté avec succès',
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              this.router.navigate(['/admin/products']);
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur serveur',
+              text: 'Impossible d’enregistrer le produit. Veuillez réessayer plus tard.',
+            });
+            console.error('Erreur :', err);
+          }
+        });
+      
       }
-    });
+
+    
+    });  
   }
 
+
+  
   cancel(): void {
-    this.router.navigate(['/admin/products']);
+      this.router.navigate(['/admin/products']);
   }
 }

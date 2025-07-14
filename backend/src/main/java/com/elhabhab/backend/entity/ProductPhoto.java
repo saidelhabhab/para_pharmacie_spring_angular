@@ -18,6 +18,6 @@ public class ProductPhoto {
     private String imagePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "productId", nullable = false)
     private Product product;
 }

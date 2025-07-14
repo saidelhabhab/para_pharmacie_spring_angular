@@ -2,8 +2,8 @@ export interface ProductRequestDTO {
   name: string;
   description?: string;
   price: number;
-  oldPrice?: number;
-  discount?: number;
+  oldPrice?: number | null;
+  discount?: number | null;
   imageFile?: File;
   photoFiles?: File[];
   inStock: boolean;
@@ -11,4 +11,6 @@ export interface ProductRequestDTO {
   brand: string;
   category: string;
   taxClass?: string;
+  barcode?:string;
+  subCategoryIds?: number[]; 
 }

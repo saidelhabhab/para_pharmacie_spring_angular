@@ -8,11 +8,17 @@ import { NgxEditorComponent, NgxEditorModule, NgxEditorMenuComponent } from 'ngx
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MaterialModule } from '../material.module';
 import { CartComponent } from './components/cart/cart.component';
+import { AddAddressDialogComponent } from './components/add-address-dialog/add-address-dialog.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 
 @NgModule({
   declarations: [
-    CartComponent
+    CartComponent,
+    AddAddressDialogComponent,
+    OrdersComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     CommonModule,

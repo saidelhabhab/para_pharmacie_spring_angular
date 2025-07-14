@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -19,6 +20,8 @@ public class ProductResponseDTO {
 
     private Long id;
     private UUID productId;
+    private String barcode;
+
 
     private String name;
     private String description;
@@ -33,6 +36,10 @@ public class ProductResponseDTO {
 
     private String brand;
     private ProductCategory category;
+
+    private List<SubCategoryResponseDTO> subCategories;
+
+
     private TaxClass taxClass;
 
 
@@ -40,5 +47,6 @@ public class ProductResponseDTO {
 
 
     private List<String> photoUrls;
+
 
 }

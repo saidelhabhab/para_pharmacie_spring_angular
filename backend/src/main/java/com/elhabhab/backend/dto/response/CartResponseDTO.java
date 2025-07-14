@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Data
@@ -13,7 +14,7 @@ import java.util.List;
 @Builder
 public class CartResponseDTO {
     private Long cartId;
-    private Long userId;
+    private UUID userId;
     private List<CartItemResponseDTO> items;
 
     private String message;  // <-- Ajoute ce champ

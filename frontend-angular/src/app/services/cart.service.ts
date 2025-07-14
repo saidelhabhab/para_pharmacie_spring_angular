@@ -16,21 +16,22 @@ export class CartService {
   /**
    * Ajouter un produit au panier
    */
-  addToCart(userId: number, dto: CartItemRequestDTO): Observable<CartResponseDTO> {
+  addToCart(userId: string, dto: CartItemRequestDTO): Observable<CartResponseDTO> {
+    console.log("data from service cart ==>", userId, ' ==> ' ,dto)
     return this.http.post<CartResponseDTO>(`${this.apiUrl}/${userId}/add`, dto);
   }
 
   /**
    * Récupérer le panier d'un utilisateur
    */
-  getCart(userId: number): Observable<CartResponseDTO> {
+  getCart(userId: string): Observable<CartResponseDTO> {
     return this.http.get<CartResponseDTO>(`${this.apiUrl}/${userId}`);
   }
 
   /**
    * Supprimer un produit du panier
    */
-  removeFromCart(userId: number, productId: string): Observable<void> {
+  removeFromCart(userId: string, productId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}/remove/${productId}`);
   }
 
@@ -38,7 +39,7 @@ export class CartService {
   /**
    * update Item Quantity du panier
    */
-  updateItemQuantity(userId: number, productId: string, quantity: number) {
+  updateItemQuantity(userId: string, productId: string, quantity: number) {
   const body = { productId, quantity };
   return this.http.put(`${this.apiUrl}/${userId}/update`, body);
 }

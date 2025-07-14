@@ -20,6 +20,7 @@ import { CouponService } from 'src/app/services/coupon.service';
 import { UserAddressService } from 'src/app/services/user-address.service';
 import { UserAddressResponseDTO } from 'src/app/interface/user-address-response-dto';
 import { ProgressDialogComponent } from '../layout/progress-dialog/progress-dialog.component';
+import { AddAddressDialogComponent } from 'src/app/user/components/add-address-dialog/add-address-dialog.component';
 
 @Component({
   selector: 'app-checkout',
@@ -50,7 +51,7 @@ export class CheckoutComponent implements OnInit {
 
   cartItems: CartItemResponseDTO[] = [];
   cartId!: number;
-  userId: number = 1; // Replace with real user ID from auth service
+  userId: string =  '49d2554d-61a3-4bc9-b6ee-26046ab29254'; // Replace with real user ID from auth service
   couponCode : string;
   appliedCoupon: CouponResponseDTO | null = null;
 
@@ -88,14 +89,26 @@ export class CheckoutComponent implements OnInit {
 
   ) {
     this.cartFormGroup = this._formBuilder.group({ cartValid: [false, Validators.requiredTrue] });
-    this.billingFormGroup = this._formBuilder.group({
+   /* this.billingFormGroup = this._formBuilder.group({
         billingValid: [
-        false, Validators.requiredTrue],
+          false, Validators.requiredTrue
+        ],
+        addressId: [null, Validators.required],      // ← new
         couponCode: [''], 
         deliveryOption: ['standard', Validators.required],
         paymentOption: ['cod', Validators.required]
       });
+      */
+
+    this.billingFormGroup = this._formBuilder.group({
+      addressId: [null, Validators.required],
+      couponCode: [''],
+      deliveryOption: ['standard', Validators.required],
+      paymentOption: ['cod', Validators.required]
+    });
   }
+
+ 
 
   ngOnInit(): void {
     this.loadCart();
@@ -139,7 +152,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   loadUserAddresses(): void {
-      const userId = 'e5edad36-42d1-4c2e-8735-f993c7d5340c'; // À remplacer dynamiquement avec AuthService
+      const userId = '49d2554d-61a3-4bc9-b6ee-26046ab29254'; // À remplacer dynamiquement avec AuthService
       this.userAddressService.getAddresses(userId).subscribe({
         next: (res) => {
           this.addresses = res;
@@ -150,13 +163,14 @@ export class CheckoutComponent implements OnInit {
       });
   }
 
-  selectAddress(addressId: number): void {
-    this.selectedAddress = addressId;
 
+   selectAddress(addressId: number): void {
+    this.selectedAddress = addressId;
+    this.billingFormGroup.get('addressId')!.setValue(addressId); // ← sync form
     if (this.billingFormGroup.valid) {
-      this.validateBilling(); // si tu as une méthode pour valider le formulaire
+      this.validateBilling();
     }
-  }
+   } 
 
 
 
@@ -294,6 +308,28 @@ export class CheckoutComponent implements OnInit {
 
   placeOrder(): void {
 
+   // console.log('Form valid:', this.billingFormGroup.valid);
+   // console.log('Form errors:', this.billingFormGroup.errors);
+   // console.log('Address ID valid:', this.billingFormGroup.get('addressId')?.valid);
+
+
+     // Validate form
+    if (!this.billingFormGroup.valid) {
+      this.billingFormGroup.markAllAsTouched();
+      
+      if (this.billingFormGroup.get('addressId')?.hasError('required')) {
+        Swal.fire('Erreur', 'Veuillez sélectionner une adresse.', 'error');
+      }
+      if (this.billingFormGroup.get('deliveryOption')?.hasError('required')) {
+        Swal.fire('Erreur', 'Veuillez sélectionner une option de livraison.', 'error');
+      }
+      if (this.billingFormGroup.get('paymentOption')?.hasError('required')) {
+        Swal.fire('Erreur', 'Veuillez sélectionner un mode de paiement.', 'error');
+      }
+      return;
+    }
+
+
     if (this.cartItems.length === 0) {
       return;
     }
@@ -303,7 +339,7 @@ export class CheckoutComponent implements OnInit {
     this.finalTotal = this.getTotal();
 
     const payload: OrderRequestDTO = {
-      userId: 'e5edad36-42d1-4c2e-8735-f993c7d5340c',
+      userId: '49d2554d-61a3-4bc9-b6ee-26046ab29254',
       addressId: this.selectedAddress, // attention bien lier ici
       couponCode: this.billingFormGroup.value.couponCode,
       deliveryOption: this.billingFormGroup.value.deliveryOption,
@@ -313,9 +349,9 @@ export class CheckoutComponent implements OnInit {
         quantity: item.quantity
       }))
     };
+ 
 
-
- //  console.log("payload ==> ", payload)
+    // console.log("payload ==> ", payload)
 
       const dialogRef = this.dialog.open(ProgressDialogComponent, {
           disableClose: true
@@ -413,5 +449,21 @@ export class CheckoutComponent implements OnInit {
 
   goToShop() {
     this.router.navigate(['/shop']);
+  }
+
+
+  openAddAddress() {
+      const dialogRef = this.dialog.open(AddAddressDialogComponent, {
+        width: '500px',
+        data: { userId: this.userId }
+      });
+
+      dialogRef.afterClosed().subscribe(newAddress => {
+        if (newAddress) {
+          // push into your `addresses` array
+          this.addresses.push(newAddress);
+          this.selectAddress(newAddress.id);
+        }
+    });
   }
 }

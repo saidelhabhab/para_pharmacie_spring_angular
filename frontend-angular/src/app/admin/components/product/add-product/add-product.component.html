@@ -49,19 +49,30 @@
 
         <!-- Main Image -->
         <div class="card upload-card mb-4">
-            <div class="card-body">
-                <h4 class="card-title">Main Image</h4>
+          <div class="card-body">
+            <h4 class="card-title">Main Image</h4>
 
-                <!-- Custom Upload Trigger -->
-                <label class="upload-label">
-                <span class="iconify" data-icon="mdi:upload" data-width="24" data-height="24"></span>
-                <span class="upload-text">Click to upload image</span>
-                <input type="file" (change)="onImageFileChange($event)" accept="image/*" hidden />
-                </label>
-
-                <p class="text-muted mt-2">Upload the main product image.</p>
+            <!-- Preview Image After Upload -->
+            <div *ngIf="previewImageUrl" class="mb-3">
+              <img [src]="previewImageUrl"
+                  alt="Preview"
+                   width="60"
+                  class="rounded shadow-sm" />
             </div>
+
+            <!-- Custom Upload Trigger -->
+            <label class="upload-label">
+              <span class="iconify" data-icon="mdi:upload" data-width="24" data-height="24"></span>
+              <span class="upload-text">Click to upload image</span>
+              <input type="file" (change)="onImageFileChange($event)" accept="image/*" hidden />
+            </label>
+
+            <p class="text-muted mt-2">Upload the main product image.</p>
+
+
+          </div>
         </div>
+
 
 
 
@@ -69,6 +80,21 @@
         <div class="card upload-card mb-4">
             <div class="card-body">
                 <h4 class="card-title">Gallery Images</h4>
+
+                <!-- Preview des images de galerie -->
+                <div class="row mb-3">
+                  <div *ngFor="let url of galleryPreviewUrls; let i = index" class="col-auto position-relative">
+                    <img [src]="url" alt="Gallery image preview" width="80" class="rounded shadow-sm border" />
+
+                    <!-- Bouton de suppression -->
+                    <button type="button"
+                            class="btn-close position-absolute top-0 end-0 bg-white p-1 rounded-circle shadow-sm"
+                            (click)="removeGalleryImage(i)"
+                            aria-label="Remove image">
+                    </button>
+                  </div>
+                </div>
+
 
                 <!-- Custom Upload Trigger -->
                 <label class="upload-label">
@@ -105,11 +131,7 @@
           </div>
         </div>
 
-        <!-- Submit buttons -->
-        <div class="form-actions mt-4 d-flex gap-3">
-          <button type="submit" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-        </div>
+
       </div>
 
       <!-- Right Side (Options) -->
@@ -133,12 +155,24 @@
               <input type="number" formControlName="quantity" class="form-control" />
             </div>
 
+
+            <!-- Choix de la catégorie principale -->
             <div class="mb-3">
-              <label class="form-label">Category <span class="text-danger">*</span></label>
-              <select formControlName="category" class="form-select">
-                <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+              <label class="form-label">Catégorie principale <span class="text-danger">*</span></label>
+                <select formControlName="category" class="form-select" (change)="onCategoryChange()">
+                  <option [value]="''" disabled selected>Choisir...</option>
+                  <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                </select>
+            </div>
+
+            <!-- Sous-catégories dynamiques -->
+            <div class="mb-3" *ngIf="subcategories.length > 0">
+              <label class="form-label">Sous-catégories</label>
+              <select formControlName="selectedCategories" class="form-select" multiple>
+                <option *ngFor="let sub of subcategories" [value]="sub.id">{{ sub.name }}</option>
               </select>
             </div>
+
 
             <div class="mb-3">
               <label class="form-label">Tax Class</label>
@@ -146,9 +180,32 @@
                 <option *ngFor="let tax of taxClass" [value]="tax">{{ tax }}</option>
               </select>
             </div>
+
+            <div class="mb-3">
+              <label class="form-label">Barcode <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                formControlName="barcode"
+                class="form-control"
+                maxlength="13"
+                minlength="8"
+                required
+                pattern="[0-9]*"
+                inputmode="numeric"
+                placeholder="Enter or scan barcode"
+              />
+              <small class="text-muted">Must be 8 to 13 digits (EAN8 or EAN13)</small>
+            </div>
+
           </div>
         </div>
       </div>
+
+      <!-- Submit buttons -->
+        <div class="form-actions mt-4 d-flex gap-3">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </div>
     </div>
   </form>
 </div>

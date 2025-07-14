@@ -75,7 +75,7 @@ export class ProductsComponent implements OnInit {
 
 
     addToCart(product: ProductResponseDTO): void { 
-      const userId = 1; // À adapter avec ton AuthService
+      const userId = '49d2554d-61a3-4bc9-b6ee-26046ab29254'; // À adapter avec ton AuthService
 
       // ✅ Vérification si le produit est en stock
         if (!product.inStock || product.quantity < 1) {

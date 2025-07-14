@@ -1,0 +1,154 @@
+
+<!-- 📦 Header Bar -->
+<div class="custom-card">
+  <div class="custom-row">
+    <div class="full-width">
+      <div class="header-bar">
+        <h4 class="page-title">Orders</h4>
+        <nav class="breadcrumb-nav" aria-label="breadcrumb">
+          <ol class="breadcrumb-list">
+            <li class="breadcrumb-item">
+              <a href="/admin/dashboard" class="breadcrumb-link">
+                <span class="iconify" data-icon="mdi:home" style="font-size: 20px;"></span>
+              </a>
+            </li>
+            <li class="breadcrumb-item current">
+              <span class="breadcrumb-badge">Orders</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- 🔍 Search & Action Bar -->
+<div class="widget-content searchable-container list">
+  <div class="card card-body shadow-sm rounded-4 animate-fade-in">
+    <div class="row g-3 align-items-center">
+      <!-- Search Input -->
+      <div class="col-md-4 col-xl-3">
+        <form class="position-relative">
+          <input
+            type="text"
+            class="form-control ps-5 rounded-pill shadow-sm search-input"
+            id="input-search"
+            placeholder="Search Orders..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+            name="search"
+            autocomplete="off"
+          />
+          <span
+            class="iconify position-absolute top-50 start-0 translate-middle-y fs-5 text-secondary ms-3"
+            data-icon="mdi:magnify">
+          </span>
+        </form>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="col-md-8 col-xl-9 d-flex justify-content-md-end justify-content-center flex-wrap gap-2">
+        <a href="javascript:void(0)"
+          class="btn btn-outline-danger d-flex align-items-center gap-2 delete-multiple animate-hover"
+          (click)="deleteAllOrders()">
+          <span class="iconify fs-5" data-icon="mdi:delete"></span> Delete All
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="orders-container" *ngIf="!isLoading; else loading">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+
+    <!-- Order ID Column -->
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef> Order ID </th>
+      <td mat-cell *matCellDef="let order">
+        <span class="text-id">{{ order.orderId | slice:0:8 }}...</span>
+      </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="orderDate">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let order">
+            {{ formatOrderDate(order.orderDate) | date:'medium' }}
+        </td>
+    </ng-container>
+
+    <!-- Items Column -->
+    <ng-container matColumnDef="items">
+      <th mat-header-cell *matHeaderCellDef> Items </th>
+      <td mat-cell *matCellDef="let order">
+        <ul>
+          <li *ngFor="let item of order.items">
+            <span class="iconify" data-icon="mdi:cart-outline"></span>
+            {{ item.productName }} <strong>(x{{ item.quantity }})</strong> 
+          </li>
+        </ul>
+      </td>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let order">
+        {{ order.totalAmount | currency:'MAD' }}
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let order">
+        <div class="status-wrapper">
+          <!-- Status Display -->
+          <span class="status-label" [ngClass]="order.status.toLowerCase()">
+            <span class="iconify" data-icon="mdi:clock-outline"></span>
+            {{ order.status }}
+          </span>
+
+          <!-- Status Dropdown -->
+          <mat-form-field appearance="outline" class="status-select">
+            <mat-select
+              [(value)]="order.status"
+              (selectionChange)="onStatusChange(order, $event.value)">
+              <mat-option *ngFor="let status of availableStatuses" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+    </ng-container>
+
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let order">
+        <button mat-icon-button color="primary" (click)="viewOrderDetails(order)">
+            <span class="iconify" data-icon="mdi:eye-outline"></span>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="animate-row"></tr>
+  </table>
+
+
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+</ng-template>

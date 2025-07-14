@@ -47,7 +47,7 @@ public class CouponController {
     }
 
     @PostMapping("/apply")
-    public ResponseEntity<CouponResponseDTO> applyCoupon(@RequestParam String code, @RequestParam Long userId) {
+    public ResponseEntity<CouponResponseDTO> applyCoupon(@RequestParam String code, @RequestParam UUID userId) {
         return ResponseEntity.ok(couponService.applyCouponToCart(code, userId));
     }
 }

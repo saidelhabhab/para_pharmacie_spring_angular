@@ -55,4 +55,12 @@ public class ProductController {
     public ResponseEntity<Page<ProductResponseDTO>> getProductsPage(Pageable pageable) {
         return ResponseEntity.ok(productService.getProductsPage(pageable));
     }
+
+    @PatchMapping("/products/{productId}/discount")
+    public ResponseEntity<ProductResponseDTO> updateProductDiscount(
+            @PathVariable UUID productId,
+            @RequestBody ProductRequestDTO dto) {
+        ProductResponseDTO updatedProduct = productService.updateProductDiscount(productId, dto);
+        return ResponseEntity.ok(updatedProduct);
+    }
 }

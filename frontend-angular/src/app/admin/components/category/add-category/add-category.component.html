@@ -1,0 +1,38 @@
+<div class="container mt-4 animated-card">
+  <h3 class="mb-4 text-primary">Ajouter une nouvelle catégorie</h3>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <!-- Champ nom -->
+    <div class="mb-3 form-group-icon">
+      <label for="name" class="form-label">Nom de la catégorie</label>
+      <span class="iconify icon" data-icon="mdi:tag-outline"></span>
+      <input type="text" id="name" class="form-control with-icon" formControlName="name" placeholder="Ex: Shampooing" />
+      <div class="text-danger" *ngIf="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid">
+        Le nom est requis.
+      </div>
+    </div>
+
+    <!-- Catégorie parente -->
+    <div class="mb-3 form-group-icon">
+      <label for="parentCategory" class="form-label">Catégorie parente</label>
+      <span class="iconify icon" data-icon="mdi:folder-outline"></span>
+      <select id="parentCategory" class="form-select with-icon" formControlName="parentCategory">
+        <option value="">-- Sélectionner --</option>
+        <option *ngFor="let cat of parentCategories" [value]="cat">{{ cat }}</option>
+      </select>
+      <div class="text-danger" *ngIf="categoryForm.get('parentCategory')?.touched && categoryForm.get('parentCategory')?.invalid">
+        La catégorie parente est requise.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100 mt-3 animate-hover" [disabled]="categoryForm.invalid">
+        <span class="iconify me-2" data-icon="mdi:plus-circle-outline"></span>
+        Ajouter
+    </button>
+
+    <button type="button" class="btn btn-outline-secondary w-100 mt-2" (click)="dialogRef.close()">
+        <span class="iconify me-2" data-icon="mdi:close-circle-outline"></span>
+        Fermer
+    </button>
+  </form>
+</div>

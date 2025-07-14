@@ -2,11 +2,9 @@ package com.elhabhab.backend.service.admin.product;
 
 import com.elhabhab.backend.dto.request.ProductRequestDTO;
 import com.elhabhab.backend.dto.response.ProductResponseDTO;
-import com.elhabhab.backend.entity.Notification;
-import com.elhabhab.backend.entity.Product;
-import com.elhabhab.backend.entity.ProductPhoto;
-import com.elhabhab.backend.entity.User;
+import com.elhabhab.backend.entity.*;
 import com.elhabhab.backend.mapper.ProductMapper;
+import com.elhabhab.backend.repository.SubCategoryRepository;
 import com.elhabhab.backend.repository.NotificationRepository;
 import com.elhabhab.backend.repository.ProductRepository;
 import com.elhabhab.backend.repository.UserRepository;
@@ -19,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -38,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final JavaMailSender mailSender;
+    private final SubCategoryRepository subCategoryRepository;
 
     @Value("${product.image.upload-dir:uploads/products}")
     private String uploadDir;
@@ -47,6 +47,17 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toEntity(dto);
         product.setProductId(UUID.randomUUID());
         product.setCreatedTime(LocalDateTime.now());
+
+// 🎯 Associer les sous-catégories
+        if (dto.getSubCategoryIds() != null && !dto.getSubCategoryIds().isEmpty()) {
+            List<SubCategory> subCategories = subCategoryRepository.findAllById(dto.getSubCategoryIds());
+            product.setSubCategories(subCategories);
+        }
+
+        // ✅ Générer automatiquement un code-barres unique (basé sur timestamp)
+      //  String generatedBarcode = "P-" + System.currentTimeMillis();
+      //  product.setBarcode(generatedBarcode);
+
 
         if (dto.getImageFile() != null && !dto.getImageFile().isEmpty()) {
             String imagePath = saveImageToFileSystem(dto.getImageFile());
@@ -80,6 +91,14 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
         productMapper.updateProductFromDto(dto, product);
+
+
+        // 🔄 Mise à jour des sous-catégories
+        if (dto.getSubCategoryIds() != null) {
+            List<SubCategory> subCategories = subCategoryRepository.findAllById(dto.getSubCategoryIds());
+            product.setSubCategories(subCategories);
+        }
+
 
         // 🖼️ Mise à jour de l'image principale
         if (dto.getImageFile() != null && !dto.getImageFile().isEmpty()) {
@@ -137,14 +156,34 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProductResponseDTO> getAllProducts() {
         return productMapper.toDtoList(productRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ProductResponseDTO> getProductsPage(Pageable pageable) {
         return productRepository.findAll(pageable).map(productMapper::toDto);
     }
+
+    @Override
+    public ProductResponseDTO updateProductDiscount(UUID productId, ProductRequestDTO dto) {
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        // Only update fields if present
+        if (dto.getPrice() != null) product.setPrice(dto.getPrice());
+        if (dto.getOldPrice() != null) product.setOldPrice(dto.getOldPrice());
+        else product.setOldPrice(null);
+
+        if (dto.getDiscount() != null) product.setDiscount(dto.getDiscount());
+        else product.setDiscount(null);
+
+        Product updated = productRepository.save(product);
+        return productMapper.toDto(updated);
+    }
+
 
     private String saveImageToFileSystem(MultipartFile imageFile) {
         try {
@@ -195,7 +234,7 @@ public class ProductServiceImpl implements ProductService {
                 "💡 Description : " + product.getDescription() + "\n" +
                 "💰 Prix : " + product.getPrice() + " DH" +
                 (product.getOldPrice() != null ? " (Ancien prix : " + product.getOldPrice() + " DH)" : "") + "\n" +
-                "🔖 Remise : " + (product.getDiscount() != null ? product.getDiscount() + " DH" : "Aucune") + "\n" +
+                "🔖 Remise : " + (product.getDiscount() != null ? product.getDiscount() + " %" : "Aucune") + "\n" +
                 "🏷️ Catégorie : " + product.getCategory() + "\n" +
                 "✅ En stock : " + (product.isInStock() ? "Oui" : "Non") + "\n" +
                 "📦 Quantité disponible : " + product.getQuantity() + "\n" +
@@ -244,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
                 product.getDescription(),
                 product.getPrice(),
                 product.getOldPrice() != null ? "(ancien : " + product.getOldPrice() + " DH)" : "",
-                product.getDiscount() != null ? product.getDiscount() + " DH" : "Aucune",
+                product.getDiscount() != null ? product.getDiscount() + " %" : "Aucune",
                 product.getCategory().toString(),
                 productUrl
         );

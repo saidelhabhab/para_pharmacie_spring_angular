@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Ajouter une nouvelle adresse</h2>
+
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="address-form">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="name" placeholder="Ex: Maison">
+        <mat-error *ngIf="addressForm.get('name')?.hasError('required')">
+          Le nom est requis.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Rue</mat-label>
+        <input matInput formControlName="street" placeholder="Ex: 123 Rue du Maroc">
+        <mat-error *ngIf="addressForm.get('street')?.hasError('required')">
+          La rue est requise.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row two-cols">
+      <mat-form-field appearance="outline">
+        <mat-label>Ville</mat-label>
+        <input matInput formControlName="city" placeholder="Ex: Casablanca">
+        <mat-error *ngIf="addressForm.get('city')?.hasError('required')">
+          La ville est requise.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Code Postal</mat-label>
+        <input matInput formControlName="zip" placeholder="10000">
+        <mat-error *ngIf="addressForm.get('zip')?.hasError('required')">
+          Le code postal est requis.
+        </mat-error>
+        <mat-error *ngIf="addressForm.get('zip')?.hasError('pattern')">
+          Format invalide.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Téléphone</mat-label>
+        <input matInput formControlName="userPhone" placeholder="+212600112233">
+        <mat-error *ngIf="addressForm.get('userPhone')?.hasError('required')">
+          Le téléphone est requis.
+        </mat-error>
+        <mat-error *ngIf="addressForm.get('userPhone')?.hasError('pattern')">
+          Format international requis.
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()" [disabled]="loading">Annuler</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+      <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+      <span *ngIf="!loading">Enregistrer</span>
+    </button>
+  </mat-dialog-actions>
+</form>

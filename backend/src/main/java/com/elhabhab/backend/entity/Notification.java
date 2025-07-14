@@ -9,7 +9,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class Notification {
 
@@ -30,6 +29,6 @@ public class Notification {
     private LocalDateTime createdDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = false)
     private User user;
 }

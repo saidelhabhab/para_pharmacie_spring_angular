@@ -55,7 +55,7 @@ export class CouponService {
   /**
    * ✅ Appliquer un coupon (vérifier sa validité côté backend)
    */
-  applyCoupon(code: string, userId: number): Observable<CouponResponseDTO> {
+  applyCoupon(code: string, userId: string): Observable<CouponResponseDTO> {
     const params = new HttpParams()
       .set('code', code)
       .set('userId', userId.toString());

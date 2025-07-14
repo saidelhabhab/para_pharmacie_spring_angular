@@ -60,7 +60,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public CouponResponseDTO applyCouponToCart(String code, Long userId) {
+    public CouponResponseDTO applyCouponToCart(String code, UUID userId) {
         Coupon coupon = couponRepository.findByCode(code)
                 .orElseThrow(() -> new RuntimeException("Coupon code not found"));
         if (!coupon.isActive() ||
